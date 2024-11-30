@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../styles/Login.css';
@@ -13,6 +13,15 @@ function Login() {
     const [eyeClass, setEyeClass] = useState('');
     const navigate = useNavigate();
     const { loginUser } = useUser();
+    const [message, setMessage] = useState("")
+
+
+  useEffect(() => {
+    if (location.state && location.state.message) {
+        setMessage(location.state.message);
+    }
+  }, [location.state]
+);
 
     const defaultUser = {
         email: 'superadmin@gmail.com',
@@ -61,6 +70,9 @@ function Login() {
 
     return (
         <div className="container">
+            <div>
+            {message && <div className="alert alert-success">{message}</div>}
+            </div>
             <div className="left-pane">
                 <h1 className="title">AdoVelopers</h1>
                 <p className="subtitle">The best fingerprint locked door.</p>

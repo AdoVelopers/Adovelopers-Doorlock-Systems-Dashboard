@@ -3,46 +3,68 @@ import axios from "axios";
 import '../styles/Header.css';
 import Image from '../assets/karl-bilog.png';
 import { IoIosArrowDropdown } from "react-icons/io";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Header() {
     const [showDropdown, setShowDropdown] = useState(false);
-    const [user, setUser] = useState(null); 
+    const [user, setUser] = useState(null);
+    const navigate = useNavigate();
 
     const toggleDropdown = () => setShowDropdown(prevState => !prevState);
 
     useEffect(() => {
         if (showDropdown) {
-            document.body.style.overflow = 'hidden'; 
+            document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = '';
         }
 
         return () => {
-            document.body.style.overflow = ''; 
+            document.body.style.overflow = '';
         };
     }, [showDropdown]);
 
     useEffect(() => {
-        axios.get('/api/user-profile', { withCredentials: true }) 
+        axios.get('/api/user-profile', { withCredentials: true })
             .then(response => {
-                setUser(response.data); 
+                setUser(response.data);
             })
             .catch(error => {
                 console.error('Error fetching user data:', error);
             });
     }, []);
 
+    const handleLogout = () => {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You will be logged out of your account.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, logout",
+            cancelButtonText: "Cancel",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem('loginSuccess');
+                sessionStorage.clear();
+                Swal.fire("Logged out", "You have been successfully logged out.", "success").then(() => {
+                    navigate("/"); 
+                });
+            }
+        });
+    };
+    
+    
     return (
         <div className="global-header">
             <div className="header-content">
-                <div className="header-text">
-                 
-                </div>
+                <div className="header-text"></div>
                 <div className="header-profile">
                     <div className="image-container">
                         <img
-                            src={Image} 
+                            src={Image}
                             alt="User Profile"
                         />
                     </div>
@@ -54,8 +76,8 @@ function Header() {
                         )}
                     </div>
                     <div className="dropdown-container">
-                        <button 
-                            className={`dropdown-toggle ${showDropdown ? 'open' : ''}`} 
+                        <button
+                            className={`dropdown-toggle ${showDropdown ? 'open' : ''}`}
                             onClick={toggleDropdown}
                             aria-haspopup="true"
                             aria-expanded={showDropdown ? "true" : "false"}
@@ -63,13 +85,19 @@ function Header() {
                             <IoIosArrowDropdown />
                         </button>
                         {showDropdown && (
-                            <div className="dropdown-menu">
-                                <a className="dropdown-item" href="/editprofile">
-                                    <Link to="/editprofile">Profile</Link>
-                                </a>
-                                <a className="dropdown-item" href="/settings">Settings</a>
-                                <a className="dropdown-item" href="/logout">Logout</a>
-                            </div>
+                       <div className="dropdown-menu">
+                       <a className="dropdown-item" href="/editprofile">
+                           <Link to="/editprofile">Profile</Link>
+                       </a>
+                       <a className="dropdown-item" href="/settings">Settings</a>
+                       <button
+                           className="dropdown-item"
+                           onClick={handleLogout}
+                       >
+                           Logout
+                       </button>
+                   </div>
+                   
                         )}
                     </div>
                 </div>

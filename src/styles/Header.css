@@ -118,6 +118,11 @@
     padding: 0.625rem 1.25rem;
     text-decoration: none;
     display: block;
+    background-color: inherit;
+    border: none;
+    justify-content: center;
+    display: flex;
+    
 }
 
 .dropdown-item:hover {
@@ -129,6 +134,7 @@
     text-decoration: none;
     color: inherit;
 }
+
 
 @media (max-width: 48rem) {
     .global-header {

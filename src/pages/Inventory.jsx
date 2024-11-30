@@ -3,6 +3,9 @@ import './../styles/Inventory.css';
 import Sidebar from "../components/Sidebar";
 import Edit from "../assets/edit.png";
 import Delete from "../assets/delete.png";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+
+
 
 function Inventory() {
     const [inventoryData, setInventoryData] = useState([
@@ -115,14 +118,14 @@ function Inventory() {
                         onClick={goToPreviousPage}
                         disabled={currentPage === 1}
                     >
-                        &#8592; 
+                        <MdKeyboardArrowLeft size={'20px'}/>
                     </button>
                     <button
                         className="pagination-arrow"
                         onClick={goToNextPage}
                         disabled={currentPage === totalPages}
                     >
-                        &#8594; 
+                        <MdKeyboardArrowRight size={'20px'}/>
                     </button>
                 </div>
             </div>
