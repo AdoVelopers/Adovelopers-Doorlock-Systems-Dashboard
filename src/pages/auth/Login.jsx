@@ -5,23 +5,23 @@ import '../../styles/Login.css';
 import FingerPrint from '../../assets/Frame.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useUser } from '../../protectedRoutes/UserContext';
+import LoginLoading from './LoginLoading'; 
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [eyeClass, setEyeClass] = useState('');
+    const [loading, setLoading] = useState(false); 
     const navigate = useNavigate();
     const { loginUser } = useUser();
-    const [message, setMessage] = useState("")
+    const [message, setMessage] = useState("");
 
-
-  useEffect(() => {
-    if (location.state && location.state.message) {
-        setMessage(location.state.message);
-    }
-  }, [location.state]
-);
+    useEffect(() => {
+        if (location.state && location.state.message) {
+            setMessage(location.state.message);
+        }
+    }, [location.state]);
 
     const defaultUser = {
         email: 'superadmin@gmail.com',
@@ -43,24 +43,28 @@ function Login() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-    
-        if (email === defaultUser.email && password === defaultUser.password) {
-            loginUser({ email, role: 'superadmin' });
-            localStorage.setItem('loginSuccess', 'true');
-            navigate('/dashboard', { state: { success: true } });
-        } else if (email === defaultAdmin.email && password === defaultAdmin.password) {
-            loginUser({ email, role: 'admin' });
-            localStorage.setItem('loginSuccess', 'true');
-            navigate('/dashboard', { state: { success: true } }); 
-        } else if (email === defaultUserLogin.email && password === defaultUserLogin.password) {
-            loginUser({ email, role: 'user' });
-            localStorage.setItem('loginSuccess', 'true');
-            navigate('/dashboard', { state: { success: true } }); 
-        } else {
-            Swal.fire('Invalid credentials, please try again.');
-        }
+        setLoading(true);
+        
+
+        setTimeout(() => {
+            if (email === defaultUser.email && password === defaultUser.password) {
+                loginUser({ email, role: 'superadmin' });
+                localStorage.setItem('loginSuccess', 'true');
+                navigate('/dashboard', { state: { success: true } });
+            } else if (email === defaultAdmin.email && password === defaultAdmin.password) {
+                loginUser({ email, role: 'admin' });
+                localStorage.setItem('loginSuccess', 'true');
+                navigate('/dashboard', { state: { success: true } }); 
+            } else if (email === defaultUserLogin.email && password === defaultUserLogin.password) {
+                loginUser({ email, role: 'user' });
+                localStorage.setItem('loginSuccess', 'true');
+                navigate('/dashboard', { state: { success: true } }); 
+            } else {
+                Swal.fire('Invalid credentials, please try again.');
+                setLoading(false);
+            }
+        }, 2000); 
     };
-    
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -71,7 +75,7 @@ function Login() {
     return (
         <div className="container">
             <div>
-            {message && <div className="alert alert-success">{message}</div>}
+                {message && <div className="alert alert-success">{message}</div>}
             </div>
             <div className="left-pane">
                 <h1 className="title">AdoVelopers</h1>
@@ -79,61 +83,65 @@ function Login() {
                 <button className="read-more-btn">Read More</button>
             </div>
             <div className="right-pane">
-                <div className="login-container">
-                    <div className="icon-container">
-                        <i className="fas fa-fingerprint fingerprint-icon"></i>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <img src={FingerPrint} alt="Fingerprint" />
-                    </div>
+                {loading ? (
+                    <LoginLoading name="Karl Bernaldez" /> 
+                ) : (
+                    <div className="login-container">
+                        <div className="icon-container">
+                            <i className="fas fa-fingerprint fingerprint-icon"></i>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <img src={FingerPrint} alt="Fingerprint" />
+                        </div>
 
-                    <h4 className="login-title">Log in to your Account</h4>
-                    <p className="login-subtitle">Enter your admin credentials to proceed.</p>
-                    <form onSubmit={handleLogin}>
-                        <div className="form-group">
-                            <label htmlFor="email" className="form-label">Email Address</label>
-                            <input
-                                id="email"
-                                type="email"
-                                className="form-input"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="password" className="form-label">Password</label>
-                            <div className="password-container">
+                        <h4 className="login-title">Log in to your Account</h4>
+                        <p className="login-subtitle">Enter your admin credentials to proceed.</p>
+                        <form onSubmit={handleLogin}>
+                            <div className="form-group">
+                                <label htmlFor="email" className="form-label">Email Address</label>
                                 <input
-                                    id="password"
-                                    type={showPassword ? 'text' : 'password'}
+                                    id="email"
+                                    type="email"
                                     className="form-input"
-                                    value={password}
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                 />
-                                <span
-                                    className={`eye-icon ${eyeClass}`}
-                                    onClick={togglePasswordVisibility}
-                                    aria-label={showPassword ? "Hide password" : "Show password"}
-                                >
-                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                </span>
                             </div>
-                        </div>
-                        <div className="form-options">
-                            <label className="checkbox-container">
-                                <input type="checkbox" />
-                                <span className="checkbox-label">Remember me</span>
-                            </label>
-                            <a href="#" className="forgot-password-link">Forgot Password?</a>
-                        </div>
-                        <div className="form-group">
-                            <button type="submit" className="login-btn">Log in</button>
-                        </div>
-                        <div className="signup-link">
-                            <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
-                        </div>
-                    </form>
-                </div>
+                            <div className="form-group">
+                                <label htmlFor="password" className="form-label">Password</label>
+                                <div className="password-container">
+                                    <input
+                                        id="password"
+                                        type={showPassword ? 'text' : 'password'}
+                                        className="form-input"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                    />
+                                    <span
+                                        className={`eye-icon ${eyeClass}`}
+                                        onClick={togglePasswordVisibility}
+                                        aria-label={showPassword ? "Hide password" : "Show password"}
+                                    >
+                                        {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="form-options">
+                                <label className="checkbox-container">
+                                    <input type="checkbox" />
+                                    <span className="checkbox-label">Remember me</span>
+                                </label>
+                                <a href="#" className="forgot-password-link">Forgot Password?</a>
+                            </div>
+                            <div className="form-group">
+                                <button type="submit" className="login-btn">Log in</button>
+                            </div>
+                            <div className="signup-link">
+                                <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+                            </div>
+                        </form>
+                    </div>
+                )}
             </div>
 
             <div className='circle-bottom'></div>
