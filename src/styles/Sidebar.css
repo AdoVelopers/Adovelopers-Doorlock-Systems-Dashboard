@@ -15,6 +15,7 @@
     flex-direction: column;
     height: 100%;
     padding-top: 1.25rem;
+    flex-grow: 1;
 }
 
 .sidebar ul {
@@ -115,7 +116,7 @@
     top: calc(80% + 0.5rem);
     left: 50%;
     transform: translateX(-50%);
-    background-color: #02298A;
+    background-color: #00288f00;
     list-style-type: none;
     padding: 0.5rem 0;
     border-radius: 0.3125rem;
@@ -145,7 +146,7 @@
 
 .sidebar .dropdown li a:hover {
     background-color: #FFFFFF; 
-    color: #02298A;
+    color: black;
 }
 
 .sidebar .dropdown li.active a {
@@ -162,10 +163,10 @@
 }
 
 .logout-container {
-    margin-top: 120%;
-    margin-bottom: 1rem;
     display: flex;
     justify-content: center;
+    margin-top: auto;
+    margin-bottom: 1rem;
 }
 
 .logout-btn {
