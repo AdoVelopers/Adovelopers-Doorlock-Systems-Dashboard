@@ -3,10 +3,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../styles/Login.css';
 import FingerPrint from '../../assets/Frame.png';
+import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [eyeClass, setEyeClass] = useState(''); 
     const navigate = useNavigate();
 
     const defaultUser = {
@@ -23,7 +26,13 @@ function Login() {
             Swal.fire('Invalid credentials, please try again.');
         }
     };
-    
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+        setEyeClass('bounce');  
+        setTimeout(() => setEyeClass(''), 500);  
+    };
+
     return (
         <div className="container">
             <div className="left-pane">
@@ -62,12 +71,18 @@ function Login() {
                             <div className="password-container">
                                 <input
                                     id="password"
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}  
                                     className="form-input"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
-                                <i className="fas fa-eye eye-icon"></i>
+                                <span
+                                    className={`eye-icon ${eyeClass}`} 
+                                    onClick={togglePasswordVisibility}  
+                                    aria-label={showPassword ? "Hide password" : "Show password"}
+                                >
+                                    {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                </span>
                             </div>
                         </div>
                         <div className="form-options">
@@ -97,15 +112,10 @@ function Login() {
                 </div>
             </div>
 
-            <div className='circle-bottom'>
-
-            </div>
-
-            <div className='circle-bottom2'>
-
-            </div>
+            <div className='circle-bottom'></div>
+            <div className='circle-bottom2'></div>
         </div>
     );
 }
 
-export default Login;
+export default Login; 

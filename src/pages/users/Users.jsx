@@ -6,12 +6,12 @@ import Delete from "../../assets/delete.png";
 
 function Users() {
     const [usersData, setUsersData] = useState([
-        { id: 1, userId: 'U101', name: 'Alice Johnson', email: 'alice.johnson@example.com', dateRegistered: '2024-03-12', role: 'User', status: 'Active' },
-        { id: 2, userId: 'U102', name: 'Bob Williams', email: 'bob.williams@example.com', dateRegistered: '2024-04-08', role: 'Moderator', status: 'Inactive' },
-        { id: 3, userId: 'U103', name: 'Charlie Brown', email: 'charlie.brown@example.com', dateRegistered: '2024-05-19', role: 'Admin', status: 'Active' },
-        { id: 4, userId: 'U104', name: 'Daisy Ridley', email: 'daisy.ridley@example.com', dateRegistered: '2024-06-10', role: 'User', status: 'Inactive' },
-        { id: 5, userId: 'U105', name: 'Ethan Hunt', email: 'ethan.hunt@example.com', dateRegistered: '2024-07-21', role: 'Moderator', status: 'Active' },
-        { id: 6, userId: 'U106', name: 'Fiona Apple', email: 'fiona.apple@example.com', dateRegistered: '2024-08-01', role: 'Admin', status: 'Active' },
+        { id: 1, userId: 'U101', name: 'TEST', email: 'TEST@example.com', dateRegistered: '2024-03-12', role: 'User', status: 'Active' },
+        { id: 2, userId: 'U102', name: 'TEST', email: 'TEST@example.com', dateRegistered: '2024-04-08', role: 'Moderator', status: 'Inactive' },
+        { id: 3, userId: 'U103', name: 'TEST', email: 'TEST@example.com', dateRegistered: '2024-05-19', role: 'Admin', status: 'Active' },
+        { id: 4, userId: 'U104', name: 'TEST', email: 'TEST@example.com', dateRegistered: '2024-06-10', role: 'User', status: 'Inactive' },
+        { id: 5, userId: 'U105', name: 'TEST', email: 'TEST@example.com', dateRegistered: '2024-07-21', role: 'Moderator', status: 'Active' },
+        { id: 6, userId: 'U106', name: 'TEST', email: 'TEST@example.com', dateRegistered: '2024-08-01', role: 'Admin', status: 'Active' },
     ]);
 
     const [currentPage, setCurrentPage] = useState(1);

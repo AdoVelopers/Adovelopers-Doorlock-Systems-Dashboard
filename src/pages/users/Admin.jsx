@@ -7,13 +7,8 @@ import Delete from "../../assets/delete.png";
 
 function Admin() {
     const [usersData, setUsersData] = useState([
-        { id: 1, userId: 'U001', name: 'John Doe', email: 'john.doe@example.com', dateRegistered: '2024-01-01', role: 'Admin', status: 'Active', policy: 'None' },
-        { id: 2, userId: 'U002', name: 'Jane Smith', email: 'jane.smith@example.com', dateRegistered: '2024-02-15', role: 'User', status: 'Inactive', policy: 'Restricted' },
-        { id: 3, userId: 'U003', name: 'Alice Johnson', email: 'alice.johnson@example.com', dateRegistered: '2024-03-10', role: 'User', status: 'Active', policy: 'None' },
-        { id: 4, userId: 'U004', name: 'Bob Brown', email: 'bob.brown@example.com', dateRegistered: '2024-04-20', role: 'User', status: 'Inactive', policy: 'Restricted' },
-        { id: 5, userId: 'U005', name: 'Charlie Davis', email: 'charlie.davis@example.com', dateRegistered: '2024-05-05', role: 'Admin', status: 'Active', policy: 'None' },
-        { id: 6, userId: 'U006', name: 'Dana Lee', email: 'dana.lee@example.com', dateRegistered: '2024-06-01', role: 'User', status: 'Active', policy: 'Restricted' },
-        { id: 7, userId: 'U007', name: 'Eve Martinez', email: 'eve.martinez@example.com', dateRegistered: '2024-07-15', role: 'User', status: 'Inactive', policy: 'None' },
+        { id: 1, userId: 'U001', name: 'Karl', email: 'Karl@example.com', dateRegistered: '2024-01-01', role: 'Admin', status: 'Active', policy: 'None' },
+        { id: 2, userId: 'U002', name: 'Juan', email: 'juan@example.com', dateRegistered: '2024-02-15', role: 'User', status: 'Inactive', policy: 'Restricted' },
     ]);
 
     const [showModal, setShowModal] = useState(false);

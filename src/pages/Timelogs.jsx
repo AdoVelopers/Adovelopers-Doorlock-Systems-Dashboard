@@ -6,14 +6,14 @@ import Delete from "../assets/delete.png";
 
 function Timelogs() {
     const [timelogsData, setTimelogsData] = useState([
-        { id: 1, date: '2024-11-01', employee: 'John Doe', hours: 8, task: 'Development', status: 'Completed', remarks: '', type: 'Sample' },
-        { id: 2, date: '2024-11-02', employee: 'Jane Smith', hours: 7, task: 'Testing', status: 'In Progress', remarks: '', type: 'Time In/Out' },
-        { id: 3, date: '2024-11-03', employee: 'Sam Wilson', hours: 6, task: 'Deployment', status: 'Completed', remarks: '', type: 'Time In/Out' },
-        { id: 4, date: '2024-11-04', employee: 'Tony Stark', hours: 8, task: 'Designing', status: 'Completed', remarks: '', type: 'Sample' },
-        { id: 5, date: '2024-11-05', employee: 'Steve Rogers', hours: 9, task: 'Research', status: 'In Progress', remarks: '', type: 'Sample' },
-        { id: 6, date: '2024-11-06', employee: 'Bruce Banner', hours: 8, task: 'Development', status: 'Completed', remarks: '', type: 'Time In/Out' },
-        { id: 7, date: '2024-11-07', employee: 'Natasha Romanoff', hours: 8, task: 'Security', status: 'Completed', remarks: '', type: 'Sample' },
-        { id: 8, date: '2024-11-08', employee: 'Clint Barton', hours: 7, task: 'Testing', status: 'In Progress', remarks: '', type: 'Time In/Out' },
+        { id: 1, date: '2024-11-01', employee: 'TEST', hours: 8, task: 'Development', status: 'Completed', remarks: '', type: 'Sample' },
+        { id: 2, date: '2024-11-02', employee: 'TEST', hours: 7, task: 'Testing', status: 'In Progress', remarks: '', type: 'Time In/Out' },
+        { id: 3, date: '2024-11-03', employee: 'TEST', hours: 6, task: 'Deployment', status: 'Completed', remarks: '', type: 'Time In/Out' },
+        { id: 4, date: '2024-11-04', employee: 'TEST', hours: 8, task: 'Designing', status: 'Completed', remarks: '', type: 'Sample' },
+        { id: 5, date: '2024-11-05', employee: 'TEST', hours: 9, task: 'Research', status: 'In Progress', remarks: '', type: 'Sample' },
+        { id: 6, date: '2024-11-06', employee: 'TEST', hours: 8, task: 'Development', status: 'Completed', remarks: '', type: 'Time In/Out' },
+        { id: 7, date: '2024-11-07', employee: 'TEST', hours: 8, task: 'Security', status: 'Completed', remarks: '', type: 'Sample' },
+        { id: 8, date: '2024-11-08', employee: 'TEST', hours: 7, task: 'Testing', status: 'In Progress', remarks: '', type: 'Time In/Out' },
     ]);
 
     const [currentPage, setCurrentPage] = useState(1);
