@@ -44,7 +44,7 @@
 }
 
 .quantity-btn {
-    background-color: #4880FF;
+    background-color: #03CCBB;
     color: white;
     border: none;
     border-radius: 0.1875rem;
@@ -55,7 +55,7 @@
 }
 
 .quantity-btn:hover {
-    background-color: #02298A;
+    background-color: #03CCBB;
 }
 
 .green {
@@ -86,4 +86,50 @@
 .editbtn:hover img,
 .deletebtn:hover img {
     filter: brightness(1.2);
+}
+
+.quantity-box {
+    border: 1px solid #03CCBB; 
+    padding: 5px 10px;
+    text-align: center; 
+    display: inline-block; 
+    min-width: 40px; 
+    margin: 0 5px; 
+    border-radius: 5px; 
+}
+
+
+th {
+    text-align: center; 
+}
+
+
+.time-in {
+    background-color: rgba(0, 182, 155, 0.2); 
+    color: #00B69B; 
+    padding: 2px 4px; 
+    border-radius: 5px; 
+    text-align: center;
+    font-size: 15px;
+    margin: 0 5px; 
+    display: inline-block; 
+    min-width: 40px; 
+}
+
+.time-out {
+    background-color: rgba(239, 56, 38, 0.2); 
+    color: #EF3826;
+    padding: 2px 4px; 
+    border-radius: 5px;
+    text-align: center; 
+    font-size: 15px;
+    margin: 0 5px; 
+    display: inline-block; 
+    min-width: 40px; 
+   
+}
+
+td {
+    text-align: center; 
+    vertical-align: middle; 
 }

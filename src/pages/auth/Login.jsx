@@ -16,14 +16,14 @@ function Login() {
 
     const handleLogin = (e) => {
         e.preventDefault();
-
+    
         if (email === defaultUser.email && password === defaultUser.password) {
             navigate('/dashboard', { state: { success: true } });
         } else {
             Swal.fire('Invalid credentials, please try again.');
         }
     };
-
+    
     return (
         <div className="container">
             <div className="left-pane">

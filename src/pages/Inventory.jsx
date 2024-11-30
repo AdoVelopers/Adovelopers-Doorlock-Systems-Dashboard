@@ -6,11 +6,10 @@ import Delete from "../assets/delete.png";
 
 function Inventory() {
     const [inventoryData, setInventoryData] = useState([
-        { id: 1, itemName: 'Laptop', status: 'Available', quantity: 10, remarks: '', type: 'Electronics' },
-        { id: 2, itemName: 'Chair', status: 'Low Stock', quantity: 3, remarks: 'Order soon', type: 'Furniture' },
+        { id: 1, itemName: 'Fingerprint Scanner', status: 'Available', quantity: 15, remarks: '2024-11-28', type: 'TIME IN' },
+        { id: 2, itemName: 'Camera', status: 'Low Stock', quantity: 2, remarks: '2024-11-28', type: 'TIME OUT' }, 
     ]);
 
-  
     const handleQuantityChange = (id, increment) => {
         setInventoryData((prevData) =>
             prevData.map((item) =>
@@ -53,7 +52,7 @@ function Inventory() {
                                     >
                                         -
                                     </button>
-                                    {item.quantity}
+                                    <span className="quantity-box">{item.quantity}</span>
                                     <button
                                         className="quantity-btn"
                                         onClick={() => handleQuantityChange(item.id, true)}
@@ -62,7 +61,13 @@ function Inventory() {
                                     </button>
                                 </td>
                                 <td>{item.remarks}</td>
-                                <td>{item.type}</td>
+                                <td className="type-column">
+                                    <span
+                                        className={item.type === 'TIME IN' ? 'time-in' : item.type === 'TIME OUT' ? 'time-out' : ''}
+                                    >
+                                        {item.type}
+                                    </span>
+                                </td>
                                 <td>
                                     <button className="editbtn">
                                         <img src={Edit} alt="Edit" />
