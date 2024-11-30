@@ -5,10 +5,11 @@ import SignUp from "./pages/auth/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
 import Timelogs from "./pages/Timelogs";
-import Users from "./pages/users/Users"; 
-import Admin from "./pages/users/Admin"; 
-import RegularUsers from "./pages/users/Users"; 
+import Users from "./pages/users/Users";
+import Admin from "./pages/users/Admin";
+import RegularUsers from "./pages/users/Users";
 import Inventory from "./pages/Inventory";
+import EditProfile from "./pages/users/EditProfile"; // Import EditProfile
 import ProtectedRoutes from "./protectedRoutes/ProtectedRoutes";
 
 function HeaderRouteCheck() {
@@ -46,7 +47,7 @@ function App() {
           <Route
             path="/users"
             element={
-              <ProtectedRoutes allowedRoles={["superadmin"]}> 
+              <ProtectedRoutes allowedRoles={["superadmin"]}>
                 <Users />
               </ProtectedRoutes>
             }
@@ -72,6 +73,14 @@ function App() {
             element={
               <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
                 <Inventory />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/editprofile"
+            element={
+              <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
+                <EditProfile />
               </ProtectedRoutes>
             }
           />

@@ -31,7 +31,7 @@ function Sidebar() {
         <div className="sidebar">
             <div className="sidebar-content"> 
                 <div className="logo-container">
-                    <span className="blue-text"><h1>Ado</h1></span><span><h1>Velopers</h1></span>
+                    <div className="blue-text"><h1>Ado</h1></div><div><h1>Velopers</h1></div>
                 </div>
 
                 <ul>
@@ -45,17 +45,23 @@ function Sidebar() {
                             <img src={Inventory} alt="" /> Inventory
                         </Link>
                     </li>
+                    {user && user.role === 'superadmin' && (
                     <li className={isActive('/timelogs') ? 'active' : ''}>
                         <Link to="/timelogs">
                             <img src={Timelogs} alt="" /> Timelogs
                         </Link>
+                        
                     </li>
+                       )}
+                         {user && user.role === 'superadmin' && (
                     <li className={isActive('/approval') ? 'active' : ''}>
                         <Link to="/approval">
                             <img src={Approval} alt="" /> For Approval
                         </Link>
+                        
                     </li>
-
+                    )}
+                  {user && user.role === 'superadmin' && (
                    
                         <li 
                             className={`${(isActive('/users') || isActive('/admin') || isActive('/regular-users')) ? 'active' : ''}`}
@@ -71,16 +77,18 @@ function Sidebar() {
                             
                             <ul className="dropdown">
                                 {/* Condition for policy */}
-                            {user && user.role === 'superadmin' && (
+                           
                                 <li className={isActive('/admin') ? 'active' : ''}>
                                     <Link to="/admin" onClick={() => setActiveLink('/admin')}>Admin</Link>
                                 </li>
-                                 )}
+                               
                                 <li className={isActive('/regular-users') ? 'active' : ''}>
                                     <Link to="/regular-users" onClick={() => setActiveLink('/regular-users')}>Users</Link>
                                 </li>
                             </ul>
+                            
                         </li>
+                          )}
                    
                 </ul>
             </div>

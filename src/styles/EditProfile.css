@@ -1,0 +1,130 @@
+.edit-profile-form {
+    padding: 1.25rem;
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center;
+    height: 100vh; 
+    background-color: #F5F6FA;
+  }
+  
+  .edit-profile-form p {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+  
+  .edit-profile-form-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+   /*  margin-bottom: 190px; */
+  }
+  
+  .edit-profile-input-group {
+    display: flex;
+    flex-direction: column; 
+    width: 50%; 
+  }
+  
+  .edit-profile-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    text-align: start;
+    display: block;
+  }
+  
+  .edit-profile-input {
+    width: 100%; 
+    max-width: 300px; 
+    padding: 10px;
+    margin: 0 auto 15px auto; 
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+
+.edit-profile-input-new-email, .edit-profile-input-email{
+    width: 600px;
+    padding: 10px;
+}
+
+  .edit-profile-btn {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+  }
+  
+  .edit-profile-btn-cancel,
+  .edit-profile-btn-save {
+    padding: 10px 20px;
+    border: 2px solid #02298A;
+    font-size: 16px;
+    cursor: pointer;
+    justify-content: end;
+    display: flex;
+    
+  }
+  
+  .edit-profile-btn-save {
+    background-color: #02298A;
+    color: white;
+  }
+  
+  .edit-profile-btn-cancel {
+    background-color: rgba(97, 95, 95, 0.233);
+    color: black;
+  }
+  
+
+  .edit-profile-password-container {
+    display: flex; 
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%; 
+    max-width: 600px;
+    margin: 0 auto 20px auto; 
+  }
+  
+  .edit-profile-password-group {
+    display: flex;
+    flex-direction: column;
+    width: 50%; 
+  }
+  
+  .edit-profile-label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+    text-align: start; /* Align labels to the left */
+  }
+  
+  .edit-profile-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  @media (max-width: 768px) {
+    .edit-profile-form-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .edit-profile-input-group {
+      width: 100%;
+    }
+  
+    .edit-profile-btn-cancel,
+    .edit-profile-btn-save {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  

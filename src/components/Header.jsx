@@ -3,7 +3,7 @@ import axios from "axios";
 import '../styles/Header.css';
 import Image from '../assets/karl-bilog.png';
 import { IoIosArrowDropdown } from "react-icons/io";
-import EditProfile from "../pages/users/EditProfile";
+import { Link } from "react-router-dom";
 
 function Header() {
     const [showDropdown, setShowDropdown] = useState(false);
@@ -24,7 +24,6 @@ function Header() {
     }, [showDropdown]);
 
     useEffect(() => {
-       
         axios.get('/api/user-profile', { withCredentials: true }) 
             .then(response => {
                 setUser(response.data); 
@@ -38,7 +37,7 @@ function Header() {
         <div className="global-header">
             <div className="header-content">
                 <div className="header-text">
-                  
+                 
                 </div>
                 <div className="header-profile">
                     <div className="image-container">
@@ -65,7 +64,9 @@ function Header() {
                         </button>
                         {showDropdown && (
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="/editprofile"> <Link to="/editprofile"></Link>Profile</a>
+                                <a className="dropdown-item" href="/editprofile">
+                                    <Link to="/editprofile">Profile</Link>
+                                </a>
                                 <a className="dropdown-item" href="/settings">Settings</a>
                                 <a className="dropdown-item" href="/logout">Logout</a>
                             </div>

@@ -124,6 +124,12 @@
     background-color: #4880FF;
 }
 
+
+.dropdown-item a {
+    text-decoration: none;
+    color: inherit;
+}
+
 @media (max-width: 48rem) {
     .global-header {
         flex-direction: column;

@@ -161,3 +161,26 @@
 .sidebar li.active .dropdown-icon {
     transform: rotate(180deg);
 }
+
+/* .logout-container {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    margin-bottom: 1rem;
+}
+
+.logout-btn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+    padding: 0.625rem 1rem;
+    border-radius: 0.3125rem;
+    transition: background-color 0.3s ease;
+}
+
+.logout-icon {
+    margin-right: 0.5rem;
+    font-size: 1.25rem;
+}
+ */
