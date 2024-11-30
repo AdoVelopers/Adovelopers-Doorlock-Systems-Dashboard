@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.left-pane {
+    width: 100%;
+    background: linear-gradient(to bottom, #0575E6, #02298A, #021B79);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    padding-right: 6.25rem;
+}
+
+.subtitle {
+    padding-right: 6.25rem;
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+}
+
+.read-more-btn {
+    margin-right: 16.875rem;
+    background-color: #0575E6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.read-more-btn:hover {
+    background-color: #2b6cb0;
+}
+
+.right-pane {
+    width: 50%;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    width: 50%;
+}
+
+.icon-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.fingerprint-icon {
+    font-size: 3rem;
+    color: #4299e1;
+}
+
+.login-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+h3 {
+    font-size: 0.4rem;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #a0aec0;
+    margin-bottom: 1rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    color: #4a5568;
+    font-size: 0.875rem;
+    font-weight: bold;
+    align-self: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.form-input {
+    width: 100%;
+    max-width: 25rem;
+    padding: 0.5rem 0.75rem;
+    border: 0.0625rem solid #cbd5e0;
+    border-radius: 0.375rem;
+    color: #4a5568;
+    outline: none;
+}
+
+.form-input:focus {
+    box-shadow: 0 0 0 0.125rem #3182ce;
+    border-color: #3182ce;
+}
+
+.password-container {
+    position: relative;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+}
+
+.eye-icon {
+    position: absolute;
+    top: 50%;
+    right: 0.75rem;
+    transform: translateY(-50%);
+    color: #a0aec0;
+    cursor: pointer;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+
+.checkbox-label {
+    font-size: 0.875rem;
+    color: #4a5568;
+}
+
+.forgot-password-link {
+    font-size: 0.875rem;
+    color: #4299e1;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.forgot-password-link:hover {
+    color: #2b6cb0;
+}
+
+.login-btn {
+    background-color: #4299e1;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem;
+    width: 100%;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #2b6cb0;
+}
+
+.signup-link {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #4a5568;
+}
+
+.signup-link a {
+    color: #4299e1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link a:hover {
+    color: #2b6cb0;
+}
+
+.admin-login-link {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    font-size: 0.875rem;
+    margin-top: 5rem;
+}
+
+.admin-login-link p {
+    margin-right: 0.25rem;
+}
+
+.admin-login-link a {
+    color: #4299e1;
+    text-decoration: none;
+}
+
+.admin-login-link a:hover {
+    color: #2b6cb0;
+}
+
+.circle-bottom {
+    height: 31.25rem;
+    border-radius: 50%;
+    width: 31.25rem;
+    background-color: transparent;
+    border: 0.0625rem solid #0575E6;
+    position: absolute;
+    left: -12.5rem;
+    bottom: -12.5rem;
+}
+
+.circle-bottom2 {
+    height: 31.25rem;
+    border-radius: 50%;
+    width: 31.25rem;
+    background-color: transparent;
+    border: 0.0625rem solid #0575E6;
+    position: absolute;
+    left: -6.25rem;
+    bottom: -15.625rem;
+}

@@ -1,0 +1,149 @@
+.users-container {
+    display: flex;
+}
+
+.users-content {
+    margin-left: 15.625rem;
+    padding: 1.25rem;
+    width: 100%;
+}
+
+.users-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+    color: #02298A;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.users-table {
+    width: 100%;
+    min-width: 43.75rem;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 0.0625rem solid #ddd;
+}
+
+.users-table th,
+.users-table td {
+    padding: 0.625rem;
+    text-align: left;
+    border-bottom: 0.0625rem solid #ddd;
+}
+
+.users-table th {
+    background-color: #f4f4f4;
+    color: black;
+    font-weight: bold;
+}
+
+.users-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.users-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.status-active {
+    color: green;
+    font-weight: bold;
+}
+
+.status-inactive {
+    color: red;
+    font-weight: bold;
+}
+
+.editbtn,
+.deletebtn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    margin-right: 0.3125rem;
+}
+
+.editbtn img,
+.deletebtn img {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.admin-container {
+    padding: 1.25rem;
+    margin-left: 15.625rem;
+    margin-top: 1.25rem;
+}
+
+.admin-table {
+    width: 100%;
+    min-width: 43.75rem;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 0.625rem;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #f4f4f4;
+}
+
+.admin-table tr {
+    border-bottom: 0.0625rem solid #ddd;
+}
+
+.admin-table td {
+    border-bottom: 0.0625rem solid #ddd;
+}
+
+.editbtn,
+.deletebtn {
+    margin: 0.3125rem;
+    padding: 0.3125rem 0.625rem;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    border-radius: 0.25rem;
+}
+
+.timelogs-table td.green {
+    color: green;
+    font-weight: bold;
+}
+
+.timelogs-table td.red {
+    color: red;
+    font-weight: bold;
+}
+
+@media (max-width: 48rem) {
+    .users-content {
+        margin-left: 0;
+    }
+
+    .users-table {
+        font-size: 0.875rem;
+    }
+
+    .table-wrapper {
+        overflow-x: scroll;
+    }
+}
+
+@media (max-width: 30rem) {
+    .admin-table {
+        font-size: 0.75rem;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 0.5rem;
+    }
+}

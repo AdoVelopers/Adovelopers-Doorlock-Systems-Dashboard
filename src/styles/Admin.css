@@ -1,0 +1,80 @@
+.admin-container {
+    padding: 1.25rem;
+    margin-left: 15.625rem;
+    margin-top: 1.25rem;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.admin-table {
+    width: 100%;
+    min-width: 43.75rem;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 0.625rem;
+    text-align: left;
+}
+
+.admin-table th {
+    background-color: #f4f4f4;
+}
+
+.admin-table tr {
+    border-bottom: 0.0625rem solid #ddd;
+}
+
+.admin-table td {
+    border-bottom: 0.0625rem solid #ddd;
+}
+
+.editbtn,
+.deletebtn {
+    margin: 0.3125rem;
+    padding: 0.3125rem 0.625rem;
+    cursor: pointer;
+    background-color: white;
+    border: none;
+    border-radius: 0.25rem;
+}
+
+.timelogs-table td.green {
+    color: green;
+    font-weight: bold;
+}
+
+.timelogs-table td.red {
+    color: red;
+    font-weight: bold;
+}
+
+@media (max-width: 48rem) {
+    .timelogs-container {
+        margin-left: 0;
+    }
+
+    .timelogs-table {
+        font-size: 0.875rem;
+    }
+
+    .table-wrapper {
+        overflow-x: scroll;
+    }
+}
+
+@media (max-width: 30rem) {
+    .admin-table {
+        font-size: 0.75rem;
+    }
+
+    .admin-table th,
+    .admin-table td {
+        padding: 0.5rem;
+    }
+}

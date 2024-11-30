@@ -1,0 +1,89 @@
+.inventory-container {
+    display: flex;
+    padding-left: 16.25rem;
+    padding-top: 1.25rem;
+    overflow-x: hidden;
+    flex-direction: column;
+}
+
+.table-wrapper {
+    margin: 1.25rem;
+    overflow-x: auto;
+    max-width: calc(100% - 3.125rem);
+}
+
+.inventory-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-family: Arial, sans-serif;
+}
+
+.inventory-table th,
+.inventory-table td {
+    padding: 0.5rem;
+    border-bottom: 0.0625rem solid #ddd;
+}
+
+.inventory-table th {
+    color: rgb(0, 0, 0);
+    background-color: #f4f4f4;
+}
+
+.inventory-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.inventory-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.inventory-table td {
+    border-left: none;
+    border-right: none;
+}
+
+.quantity-btn {
+    background-color: #4880FF;
+    color: white;
+    border: none;
+    border-radius: 0.1875rem;
+    padding: 0.3125rem 0.625rem;
+    margin: 0 0.3125rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+.quantity-btn:hover {
+    background-color: #02298A;
+}
+
+.green {
+    color: green;
+    font-weight: bold;
+}
+
+.red {
+    color: red;
+    font-weight: bold;
+}
+
+.editbtn,
+.deletebtn {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.editbtn img,
+.deletebtn img {
+    width: 1.875rem;
+    height: 1.875rem;
+    transition: filter 0.3s;
+}
+
+.editbtn:hover img,
+.deletebtn:hover img {
+    filter: brightness(1.2);
+}
