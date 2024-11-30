@@ -52,7 +52,46 @@
 .timelogs-table td.red {
     color: red;
     font-weight: bold;
+
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding: 0 1rem;
+}
+
+.pagination-info {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.pagination-arrows {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.pagination-arrow {
+    background-color: #02298A;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.pagination-arrow:hover {
+    background-color: #4880FF;
+}
+
+.pagination-arrow:disabled {
+    background-color: #CCC;
+    cursor: not-allowed;
+}
+
 
 @media (max-width: 48rem) {
     .timelogs-container {

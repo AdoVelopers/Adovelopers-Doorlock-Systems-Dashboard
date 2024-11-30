@@ -9,10 +9,30 @@ function Admin() {
     const [usersData, setUsersData] = useState([
         { id: 1, userId: 'U001', name: 'John Doe', email: 'john.doe@example.com', dateRegistered: '2024-01-01', role: 'Admin', status: 'Active', policy: 'None' },
         { id: 2, userId: 'U002', name: 'Jane Smith', email: 'jane.smith@example.com', dateRegistered: '2024-02-15', role: 'User', status: 'Inactive', policy: 'Restricted' },
+        { id: 3, userId: 'U003', name: 'Alice Johnson', email: 'alice.johnson@example.com', dateRegistered: '2024-03-10', role: 'User', status: 'Active', policy: 'None' },
+        { id: 4, userId: 'U004', name: 'Bob Brown', email: 'bob.brown@example.com', dateRegistered: '2024-04-20', role: 'User', status: 'Inactive', policy: 'Restricted' },
+        { id: 5, userId: 'U005', name: 'Charlie Davis', email: 'charlie.davis@example.com', dateRegistered: '2024-05-05', role: 'Admin', status: 'Active', policy: 'None' },
+        { id: 6, userId: 'U006', name: 'Dana Lee', email: 'dana.lee@example.com', dateRegistered: '2024-06-01', role: 'User', status: 'Active', policy: 'Restricted' },
+        { id: 7, userId: 'U007', name: 'Eve Martinez', email: 'eve.martinez@example.com', dateRegistered: '2024-07-15', role: 'User', status: 'Inactive', policy: 'None' },
     ]);
+
     const [showModal, setShowModal] = useState(false);
     const [selectedUser, setSelectedUser] = useState(null);
     const [userPolicy, setUserPolicy] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    const totalPages = Math.ceil(usersData.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentData = usersData.slice(startIndex, startIndex + itemsPerPage);
+
+    const goToPreviousPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    const goToNextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
 
     const handleEditClick = (user) => {
         setSelectedUser(user);
@@ -58,7 +78,7 @@ function Admin() {
                         </tr>
                     </thead>
                     <tbody>
-                        {usersData.map((user) => (
+                        {currentData.map((user) => (
                             <tr key={user.id}>
                                 <td>{user.userId}</td>
                                 <td>{user.name}</td>
@@ -67,10 +87,10 @@ function Admin() {
                                 <td>{user.role}</td>
                                 <td>{user.status}</td>
                                 <td>
-                                    <button className='editbtn' onClick={() => handleEditClick(user)}>
+                                    <button className="editbtn" onClick={() => handleEditClick(user)}>
                                         <img src={Edit} alt="Edit" />
                                     </button>
-                                    <button className='deletebtn'>
+                                    <button className="deletebtn">
                                         <img src={Delete} alt="Delete" />
                                     </button>
                                 </td>
@@ -78,6 +98,28 @@ function Admin() {
                         ))}
                     </tbody>
                 </table>
+            </div>
+
+            <div className="pagination-container">
+                <div className="pagination-info">
+                    {`Showing ${startIndex + 1}-${Math.min(startIndex + itemsPerPage, usersData.length)} of ${usersData.length}`}
+                </div>
+                <div className="pagination-arrows">
+                    <button
+                        className="pagination-arrow"
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 1}
+                    >
+                        &#8592;
+                    </button>
+                    <button
+                        className="pagination-arrow"
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages}
+                    >
+                        &#8594; 
+                    </button>
+                </div>
             </div>
 
             <Modal show={showModal} onHide={closeModal}>
@@ -109,19 +151,6 @@ function Admin() {
                     </Button>
                 </Modal.Footer>
             </Modal>
-
-            <div className="restricted-access">
-                <h2>Restricted Modules</h2>
-                {usersData.map(user => (
-                    <div key={user.id}>
-                        {user.policy === 'Restricted' ? (
-                            <p>Access Denied to {user.name}</p>
-                        ) : (
-                            <p>Access Granted to {user.name}</p>
-                        )}
-                    </div>
-                ))}
-            </div>
         </div>
     );
 }
