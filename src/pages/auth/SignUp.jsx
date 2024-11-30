@@ -1,8 +1,11 @@
 import React from 'react';
 import '../../styles/SignUp.css';
 import FingerPrint from '../../assets/Frame.png';
+import Login from '../../pages/auth/Login.jsx'
 
 function SignUp() {
+
+
     return (
         <div className="signup-container">
             <div className="signup-left-pane">
@@ -46,9 +49,12 @@ function SignUp() {
                         </div>
                         <button className="signup-submit-btn">Register</button>
                     </form>
-                    <p className="signup-login-link">Already have an account? <a href="#" className="signup-login-btn">Log in</a></p>
+                    <p className="signup-login-link">Already have an account? <a href="#" className="signup-login-btn" onClick={{}}>{/* <Link to='/'></Link> */}Log in</a></p>
                 </div>
             </div>
+
+            <div className='circle-btn1'></div>
+            <div className='circle-btn2'></div>
         </div>
     );
 }

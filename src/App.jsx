@@ -46,7 +46,7 @@ function App() {
           <Route
             path="/users"
             element={
-              <ProtectedRoutes allowedRoles={["superadmin"]}> {/*ternary sa condition for hide modules like this*/}
+              <ProtectedRoutes allowedRoles={["superadmin"]}> 
                 <Users />
               </ProtectedRoutes>
             }

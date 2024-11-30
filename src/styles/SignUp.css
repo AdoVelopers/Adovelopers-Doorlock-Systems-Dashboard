@@ -164,3 +164,25 @@
     text-decoration: none;
     font-weight: bold;
 }
+
+.circle-btn1{
+    height: 500px;
+    width: 500px;
+    border: 1px solid #0575E6;
+    position: absolute;
+    left: -100px;
+    bottom: -200px;
+    border-radius: 50%;
+
+}
+.circle-btn2{
+    height: 500px;
+    width: 500px;
+    border: 1px solid #0575E6;
+    position: absolute;
+    left: -20px;
+    bottom: -250px;
+    border-radius: 50%;
+    
+
+}

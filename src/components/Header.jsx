@@ -3,10 +3,11 @@ import axios from "axios";
 import '../styles/Header.css';
 import Image from '../assets/karl-bilog.png';
 import { IoIosArrowDropdown } from "react-icons/io";
+import EditProfile from "../pages/users/EditProfile";
 
 function Header() {
     const [showDropdown, setShowDropdown] = useState(false);
-    const [user, setUser] = useState(null); // profile data
+    const [user, setUser] = useState(null); 
 
     const toggleDropdown = () => setShowDropdown(prevState => !prevState);
 
@@ -64,7 +65,7 @@ function Header() {
                         </button>
                         {showDropdown && (
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="/profile">Profile</a>
+                                <a className="dropdown-item" href="/editprofile"> <Link to="/editprofile"></Link>Profile</a>
                                 <a className="dropdown-item" href="/settings">Settings</a>
                                 <a className="dropdown-item" href="/logout">Logout</a>
                             </div>
