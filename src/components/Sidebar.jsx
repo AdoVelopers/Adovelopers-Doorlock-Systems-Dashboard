@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'; 
 import '../styles/Sidebar.css';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
@@ -11,15 +11,19 @@ import Dashboard from '../assets/dashboard.png';
 
 function Sidebar() {
     const [isUsersOpen, setIsUsersOpen] = useState(false);
-    const location = useLocation();
+    const location = useLocation(); 
+
+    const [activeLink, setActiveLink] = useState(location.pathname);
+
+    useEffect(() => {
+        setActiveLink(location.pathname);
+    }, [location]);
 
     const handleUsersClick = () => {
-        setIsUsersOpen(!isUsersOpen);
+        setIsUsersOpen(!isUsersOpen); 
     };
 
-    const isActive = (path) => location.pathname === path;
-
-    const isUsersSectionActive = location.pathname === '/admin' || location.pathname === '/regular-users';
+    const isActive = (path) => activeLink === path;
 
     return (
         <div className="sidebar">
@@ -49,12 +53,11 @@ function Sidebar() {
                             <img src={Approval} alt="" /> For Approval
                         </Link>
                     </li>
-                    <li className={isUsersSectionActive ? 'active' : ''}>
-                        <Link
-                            to="#"
-                            onClick={handleUsersClick}
-                            className="dropdown-trigger"
-                        >
+
+                    <li 
+                        className={`${(isActive('/users') || isActive('/admin') || isActive('/regular-users')) ? 'active' : ''}`}
+                    >
+                        <Link to="#" onClick={handleUsersClick} className="dropdown-trigger">
                             <img src={Users} alt="" /> Users{" "}
                             {isUsersOpen ? (
                                 <RiArrowDropUpLine className="dropdown-icon" />
@@ -62,16 +65,15 @@ function Sidebar() {
                                 <RiArrowDropDownLine className="dropdown-icon" />
                             )}
                         </Link>
-                        {isUsersOpen && (
-                            <ul className="dropdown">
-                                <li className={isActive('/admin') ? 'active' : ''}>
-                                    <Link to="/admin">Admin</Link>
-                                </li>
-                                <li className={isActive('/regular-users') ? 'active' : ''}>
-                                    <Link to="/regular-users">Users</Link>
-                                </li>
-                            </ul>
-                        )}
+                        
+                        <ul className="dropdown">
+                            <li className={isActive('/admin') ? 'active' : ''}>
+                                <Link to="/admin" onClick={() => setActiveLink('/admin')}>Admin</Link>
+                            </li>
+                            <li className={isActive('/regular-users') ? 'active' : ''}>
+                                <Link to="/regular-users" onClick={() => setActiveLink('/regular-users')}>Users</Link>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
 
