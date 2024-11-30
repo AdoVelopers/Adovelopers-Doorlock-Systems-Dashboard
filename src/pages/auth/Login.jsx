@@ -3,34 +3,60 @@ import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../styles/Login.css';
 import FingerPrint from '../../assets/Frame.png';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useUser } from '../../protectedRoutes/UserContext';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
-    const [eyeClass, setEyeClass] = useState(''); 
+    const [eyeClass, setEyeClass] = useState('');
     const navigate = useNavigate();
+    const { loginUser } = useUser();
 
     const defaultUser = {
         email: 'superadmin@gmail.com',
         password: 'pass123',
+        role: 'superadmin',
+    };
+
+    const defaultAdmin = {
+        email: 'admin@gmail.com',
+        password: 'adminpass',
+        role: 'admin',
+    };
+
+    const defaultUserLogin = {
+        email: 'user@gmail.com',
+        password: 'userpass',
+        role: 'user',
     };
 
     const handleLogin = (e) => {
         e.preventDefault();
     
         if (email === defaultUser.email && password === defaultUser.password) {
+            loginUser({ email, role: 'superadmin' });
+            localStorage.setItem('loginSuccess', 'true');
             navigate('/dashboard', { state: { success: true } });
+        } else if (email === defaultAdmin.email && password === defaultAdmin.password) {
+            loginUser({ email, role: 'admin' });
+            localStorage.setItem('loginSuccess', 'true');
+            navigate('/dashboard', { state: { success: true } }); 
+        } else if (email === defaultUserLogin.email && password === defaultUserLogin.password) {
+            loginUser({ email, role: 'user' });
+            localStorage.setItem('loginSuccess', 'true');
+            navigate('/dashboard', { state: { success: true } }); 
         } else {
             Swal.fire('Invalid credentials, please try again.');
         }
     };
+    
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
-        setEyeClass('bounce');  
-        setTimeout(() => setEyeClass(''), 500);  
+        setEyeClass('bounce');
+        setTimeout(() => setEyeClass(''), 500);
     };
 
     return (
@@ -53,9 +79,7 @@ function Login() {
                     <p className="login-subtitle">Enter your admin credentials to proceed.</p>
                     <form onSubmit={handleLogin}>
                         <div className="form-group">
-                            <label htmlFor="email" className="form-label">
-                                Email Address
-                            </label>
+                            <label htmlFor="email" className="form-label">Email Address</label>
                             <input
                                 id="email"
                                 type="email"
@@ -65,20 +89,18 @@ function Login() {
                             />
                         </div>
                         <div className="form-group">
-                            <label htmlFor="password" className="form-label">
-                                Password
-                            </label>
+                            <label htmlFor="password" className="form-label">Password</label>
                             <div className="password-container">
                                 <input
                                     id="password"
-                                    type={showPassword ? 'text' : 'password'}  
+                                    type={showPassword ? 'text' : 'password'}
                                     className="form-input"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                 />
                                 <span
-                                    className={`eye-icon ${eyeClass}`} 
-                                    onClick={togglePasswordVisibility}  
+                                    className={`eye-icon ${eyeClass}`}
+                                    onClick={togglePasswordVisibility}
                                     aria-label={showPassword ? "Hide password" : "Show password"}
                                 >
                                     {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -90,23 +112,13 @@ function Login() {
                                 <input type="checkbox" />
                                 <span className="checkbox-label">Remember me</span>
                             </label>
-                            <a href="#" className="forgot-password-link">
-                                Forgot Password?
-                            </a>
+                            <a href="#" className="forgot-password-link">Forgot Password?</a>
                         </div>
                         <div className="form-group">
-                            <button type="submit" className="login-btn">
-                                Log in
-                            </button>
+                            <button type="submit" className="login-btn">Log in</button>
                         </div>
                         <div className="signup-link">
-                            <p>
-                                Don't have an account?
-                                <Link to="/signup">Sign Up</Link>
-                            </p>
-                        </div>
-                        <div className="admin-login-link">
-                            <p>Login as </p><a href="#">Admin</a>
+                            <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
                         </div>
                     </form>
                 </div>
@@ -118,4 +130,4 @@ function Login() {
     );
 }
 
-export default Login; 
+export default Login;

@@ -5,8 +5,9 @@ import SignUp from "./pages/auth/SignUp";
 import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
 import Timelogs from "./pages/Timelogs";
-import Users from "./pages/users/Users";
-import Admin from "./pages/users/Admin";
+import Users from "./pages/users/Users"; 
+import Admin from "./pages/users/Admin"; 
+import RegularUsers from "./pages/users/Users"; 
 import Inventory from "./pages/Inventory";
 import ProtectedRoutes from "./protectedRoutes/ProtectedRoutes";
 
@@ -45,7 +46,7 @@ function App() {
           <Route
             path="/users"
             element={
-              <ProtectedRoutes allowedRoles={["superadmin"]}>
+              <ProtectedRoutes allowedRoles={["superadmin"]}> {/*ternary sa condition for hide modules like this*/}
                 <Users />
               </ProtectedRoutes>
             }
@@ -55,6 +56,14 @@ function App() {
             element={
               <ProtectedRoutes allowedRoles={["superadmin"]}>
                 <Admin />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/regular-users"
+            element={
+              <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
+                <RegularUsers />
               </ProtectedRoutes>
             }
           />

@@ -34,7 +34,7 @@ function Timelogs() {
     return (
         <div className="timelogs-container">
             <Sidebar />
-            <h1>Timelogs</h1>
+            <p>Timelogs</p>
             <div className="table-wrapper">
                 <table className="timelogs-table">
                     <thead>

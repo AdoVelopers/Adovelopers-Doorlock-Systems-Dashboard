@@ -1,19 +1,23 @@
 .dashboard-container {
     display: flex;
+ 
 }
 
 .dashboard-content {
     margin-left: 15.625rem;
-    padding: 3.125rem;
+    padding: 2.125rem;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+    
 }
 
 .dashboard-header h1 {
     margin: 0;
     font-size: 2rem;
     color: rgb(0, 0, 0);
+    font-weight: 500;
+    
 }
 
 .grid-container {
@@ -24,7 +28,7 @@
 }
 
 .grid-item {
-    background-color: white;
+    background-color: FFFFFF;
     padding: 0.625rem;
     border-radius: 0.5rem;
     box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);

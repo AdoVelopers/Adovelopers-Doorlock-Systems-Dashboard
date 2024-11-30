@@ -3,6 +3,11 @@
     margin-left: 15.625rem;
     margin-top: 1.25rem;
 }
+.timelogs-container p{
+    font-size: 35px;
+    font-weight: 500;
+    padding-left: 20px;
+}
 
 .table-wrapper {
     overflow-x: auto;
@@ -19,7 +24,7 @@
 .timelogs-table th,
 .timelogs-table td {
     padding: 0.625rem;
-    text-align: left;
+    text-align: center;
 }
 
 .timelogs-table th {

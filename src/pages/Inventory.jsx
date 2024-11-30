@@ -46,7 +46,7 @@ function Inventory() {
     return (
         <div className="inventory-container">
             <Sidebar />
-            <h1>Inventory</h1>
+            <p>Inventory</p>
             <div className="table-wrapper">
                 <table className="inventory-table">
                     <thead>

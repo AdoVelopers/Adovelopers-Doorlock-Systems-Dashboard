@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import './../styles/Dashboard.css';
@@ -8,34 +8,20 @@ import Swal from 'sweetalert2';
 
 function Dashboard() {
     const location = useLocation();
-    const { success } = location.state || {};
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 9;
-    const totalItems = 78;
+    const { success } = location.state || {}; 
 
     useEffect(() => {
         if (success) {
             Swal.fire({
                 title: 'Login Successful!',
-                text: 'Welcome to your Dashboard!',
+                text: 'Welcome AdoVelopers',
                 icon: 'success',
                 confirmButtonText: 'OK',
             });
+            
+            localStorage.removeItem('loginSuccess');
         }
     }, [success]);
-
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage + 1;
-    const endIndex = Math.min(currentPage * itemsPerPage, totalItems);
-
-    const goToPreviousPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
-
-    const goToNextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-    };
 
     return (
         <div className="dashboard-container">
@@ -73,28 +59,6 @@ function Dashboard() {
                             <h1>40,689</h1>
                         </div>
                         <img src={User} alt="Active Users Icon" className="grid-image" />
-                    </div>
-                </div>
-
-                <div className="pagination-container">
-                    <div className="pagination-info">
-                        {`Showing ${startIndex}-${endIndex} of ${totalItems}`}
-                    </div>
-                    <div className="pagination-arrows">
-                        <button
-                            className="pagination-arrow"
-                            onClick={goToPreviousPage}
-                            disabled={currentPage === 1}
-                        >
-                            &#8592; 
-                        </button>
-                        <button
-                            className="pagination-arrow"
-                            onClick={goToNextPage}
-                            disabled={currentPage === totalPages}
-                        >
-                            &#8594; 
-                        </button>
                     </div>
                 </div>
             </div>
