@@ -64,16 +64,6 @@
     background-color: #03CCBB;
 }
 
-.green {
-    color: green;
-    font-weight: bold;
-}
-
-.red {
-    color: red;
-    font-weight: bold;
-}
-
 .editbtn,
 .deletebtn {
     background-color: transparent;
@@ -182,4 +172,67 @@ td {
 .pagination-arrow:disabled {
     background-color: #CCC;
     cursor: not-allowed;
+}
+
+.inventory-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.inventory-modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    width: 400px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+}
+
+.inventory-modal-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+}
+
+.inventory-modal-footer button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: #02298A;
+    color: white;
+}
+
+.inventory-modal-footer button[type="button"] {
+    background-color: rgba(17, 16, 16, 0.068);
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+}
+
+.inventory-modal-footer button:hover {
+    background-color: #1e44a5;
 }

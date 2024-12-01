@@ -3,7 +3,8 @@ import './../styles/Timelogs.css';
 import Sidebar from "../components/Sidebar";
 import Edit from "../assets/edit.png";
 import Delete from "../assets/delete.png";
-
+import Swal from 'sweetalert2';
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 function Timelogs() {
     const [timelogsData, setTimelogsData] = useState([
         { id: 1, date: '2024-11-01', employee: 'TEST', hours: 8, task: 'Development', status: 'Completed', remarks: '', type: 'Sample' },
@@ -18,6 +19,8 @@ function Timelogs() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingTimelog, setEditingTimelog] = useState(null);
 
     const totalPages = Math.ceil(timelogsData.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -29,6 +32,50 @@ function Timelogs() {
 
     const goToNextPage = () => {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
+    const openEditModal = (log) => {
+        setEditingTimelog(log);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditingTimelog(null);
+    };
+
+    const handleEditSubmit = (e) => {
+        e.preventDefault();
+        setTimelogsData((prevData) =>
+            prevData.map((log) =>
+                log.id === editingTimelog.id ? editingTimelog : log
+            )
+        );
+        closeModal();
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Timelog has been updated successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+        });
+    };
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Once deleted, this timelog cannot be recovered!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setTimelogsData((prevData) => prevData.filter(log => log.id !== id));
+                Swal.fire('Deleted!', 'The timelog has been deleted.', 'success');
+            }
+        });
     };
 
     return (
@@ -52,16 +99,16 @@ function Timelogs() {
                         {currentData.map((log) => (
                             <tr key={log.id}>
                                 <td>{log.id}</td>
-                                <td>{log.date}</td>
+                                <td>{log.task}</td>
                                 <td>{log.employee}</td>
                                 <td>{log.hours}</td>
-                                <td>{log.task}</td>
+                                <td>{log.date}</td>
                                 <td className={log.type === 'Sample' ? 'green' : 'red'}>{log.type}</td>
                                 <td>
-                                    <button className="editbtn">
+                                    <button className="editbtn" onClick={() => openEditModal(log)}>
                                         <img src={Edit} alt="Edit" />
                                     </button>
-                                    <button className="deletebtn">
+                                    <button className="deletebtn" onClick={() => handleDelete(log.id)}>
                                         <img src={Delete} alt="Delete" />
                                     </button>
                                 </td>
@@ -71,7 +118,68 @@ function Timelogs() {
                 </table>
             </div>
 
-            <div className="pagination-container">
+            {isModalOpen && (
+    <div className="timelogs-modal-overlay">
+        <div className="timelogs-modal-content">
+            <h2>Edit Timelog</h2>
+            <form onSubmit={handleEditSubmit}>
+                <div className="form-group">
+                    <label htmlFor="employee">USER ID</label> 
+                    <input
+                        type="text"
+                        id="employee"
+                        value={editingTimelog.employee}
+                        onChange={(e) => setEditingTimelog({ ...editingTimelog, employee: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="employeeName">NAME</label> 
+                    <input
+                        type="text"
+                        id="employeeName"
+                        value={editingTimelog.employee}
+                        onChange={(e) => setEditingTimelog({ ...editingTimelog, employee: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="hours">TIME IN</label> 
+                    <input
+                        type="number"
+                        id="hours"
+                        value={editingTimelog.hours}
+                        onChange={(e) => setEditingTimelog({ ...editingTimelog, hours: +e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="date">DATE LOGGED</label> 
+                    <input
+                        type="date"
+                        id="date"
+                        value={editingTimelog.date}
+                        onChange={(e) => setEditingTimelog({ ...editingTimelog, date: e.target.value })}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="type">TYPE</label> 
+                    <select
+                        id="type"
+                        value={editingTimelog.type}
+                        onChange={(e) => setEditingTimelog({ ...editingTimelog, type: e.target.value })}
+                    >
+                        <option value="Sample">Sample</option>
+                        <option value="Time In/Out">Time In/Out</option>
+                    </select>
+                </div>
+                <div className="timelogs-modal-footer">
+                    <button type="button" onClick={closeModal}>Cancel</button>
+                    <button type="submit">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+)}
+
+<div className="pagination-container">
                 <div className="pagination-info">
                     {`Showing ${startIndex + 1}-${Math.min(startIndex + itemsPerPage, timelogsData.length)} of ${timelogsData.length}`}
                 </div>
@@ -81,18 +189,19 @@ function Timelogs() {
                         onClick={goToPreviousPage}
                         disabled={currentPage === 1}
                     >
-                        &#8592; 
+                        <MdKeyboardArrowLeft size={'20px'} />
                     </button>
                     <button
                         className="pagination-arrow"
                         onClick={goToNextPage}
                         disabled={currentPage === totalPages}
                     >
-                        &#8594; 
+                        <MdKeyboardArrowRight size={'20px'} />
                     </button>
                 </div>
             </div>
         </div>
+   
     );
 }
 

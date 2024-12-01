@@ -25,6 +25,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 1.25rem;
     margin-top: 1.25rem;
+    width: 100%;
 }
 
 .grid-item {

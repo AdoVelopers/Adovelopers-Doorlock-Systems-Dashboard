@@ -3,6 +3,7 @@ import '../../styles/User.css';
 import Sidebar from "../../components/Sidebar";
 import Edit from "../../assets/edit.png";
 import Delete from "../../assets/delete.png";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
 function Users() {
     const [usersData, setUsersData] = useState([
@@ -73,26 +74,27 @@ function Users() {
                 </div>
 
                 <div className="pagination-container">
-                    <div className="pagination-info">
-                        {`Showing ${startIndex + 1}-${Math.min(startIndex + itemsPerPage, usersData.length)} of ${usersData.length}`}
-                    </div>
-                    <div className="pagination-arrows">
-                        <button
-                            className="pagination-arrow"
-                            onClick={goToPreviousPage}
-                            disabled={currentPage === 1}
-                        >
-                            &#8592; 
-                        </button>
-                        <button
-                            className="pagination-arrow"
-                            onClick={goToNextPage}
-                            disabled={currentPage === totalPages}
-                        >
-                            &#8594; 
-                        </button>
-                    </div>
+                <div className="pagination-info">
+                    {`Showing ${startIndex + 1}-${Math.min(startIndex + itemsPerPage, usersData.length)} of ${usersData.length}`}
                 </div>
+                <div className="pagination-arrows">
+                    <button
+                        className="pagination-arrow"
+                        onClick={goToPreviousPage}
+                        disabled={currentPage === 1}
+                    >
+                        <MdKeyboardArrowLeft size={'20px'} />
+                    </button>
+                    <button
+                        className="pagination-arrow"
+                        onClick={goToNextPage}
+                        disabled={currentPage === totalPages}
+                    >
+                        <MdKeyboardArrowRight size={'20px'} />
+                    </button>
+                </div>
+            </div>
+        
             </div>
         </div>
     );

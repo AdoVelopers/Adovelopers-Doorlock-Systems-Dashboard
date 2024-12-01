@@ -4,6 +4,7 @@ import '../../styles/Admin.css';
 import Sidebar from "../../components/Sidebar";
 import Edit from "../../assets/edit.png";
 import Delete from "../../assets/delete.png";
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
 function Admin() {
     const [usersData, setUsersData] = useState([
@@ -105,17 +106,19 @@ function Admin() {
                         onClick={goToPreviousPage}
                         disabled={currentPage === 1}
                     >
-                        &#8592;
+                        <MdKeyboardArrowLeft size={'20px'} />
                     </button>
                     <button
                         className="pagination-arrow"
                         onClick={goToNextPage}
                         disabled={currentPage === totalPages}
                     >
-                        &#8594; 
+                        <MdKeyboardArrowRight size={'20px'} />
                     </button>
                 </div>
             </div>
+        
+   
 
             <Modal show={showModal} onHide={closeModal}>
                 <Modal.Header closeButton>

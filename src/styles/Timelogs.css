@@ -98,6 +98,78 @@
 }
 
 
+.timelogs-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timelogs-modal-content {
+    background: #fff;
+    padding: 20px;
+    width: 400px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.timelogs-modal-content h2 {
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.timelogs-modal-footer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.timelogs-modal-footer button {
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+.timelogs-modal-footer button[type="button"] {
+    background-color: rgba(17, 16, 16, 0.068);
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+}
+
+.timelogs-modal-footer button[type="submit"] {
+    background-color: #02298A;
+    color: white;
+}
+
+.timelogs-modal-footer button[type="submit"]:hover {
+    background-color: #1e44a5;
+}
+
 @media (max-width: 48rem) {
     .timelogs-container {
         margin-left: 0;

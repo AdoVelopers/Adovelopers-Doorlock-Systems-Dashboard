@@ -4,8 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Edit from "../assets/edit.png";
 import Delete from "../assets/delete.png";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-
-
+import Swal from 'sweetalert2'; 
 
 function Inventory() {
     const [inventoryData, setInventoryData] = useState([
@@ -23,6 +22,8 @@ function Inventory() {
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingItem, setEditingItem] = useState(null);
 
     const totalPages = Math.ceil(inventoryData.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -36,6 +37,54 @@ function Inventory() {
                     : item
             )
         );
+    };
+
+    const openEditModal = (item) => {
+        setEditingItem(item);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setEditingItem(null);
+    };
+
+    const handleEditSubmit = (e) => {
+        e.preventDefault();
+        setInventoryData((prevData) =>
+            prevData.map((item) =>
+                item.id === editingItem.id ? editingItem : item
+            )
+        );
+        closeModal();
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Item details have been updated successfully.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+        });
+    };
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Once deleted, this item cannot be recovered!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setInventoryData((prevData) => prevData.filter(item => item.id !== id));
+                Swal.fire(
+                    'Deleted!',
+                    'The item has been deleted.',
+                    'success'
+                );
+            }
+        });
     };
 
     const goToPreviousPage = () => {
@@ -95,10 +144,10 @@ function Inventory() {
                                     </span>
                                 </td>
                                 <td>
-                                    <button className="editbtn">
+                                    <button className="editbtn" onClick={() => openEditModal(item)}>
                                         <img src={Edit} alt="Edit" />
                                     </button>
-                                    <button className="deletebtn">
+                                    <button className="deletebtn" onClick={() => handleDelete(item.id)}>
                                         <img src={Delete} alt="Delete" />
                                     </button>
                                 </td>
@@ -107,6 +156,70 @@ function Inventory() {
                     </tbody>
                 </table>
             </div>
+
+
+            {isModalOpen && (
+                <div className="inventory-modal-overlay">
+                    <div className="inventory-modal-content">
+                        <h2>Edit Item</h2>
+                        <form onSubmit={handleEditSubmit}>
+                            <div className="form-group">
+                                <label htmlFor="itemName">Item Name</label>
+                                <input
+                                    type="text"
+                                    id="itemName"
+                                    value={editingItem.itemName}
+                                    onChange={(e) => setEditingItem({ ...editingItem, itemName: e.target.value })}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="status">Status</label>
+                                <select
+                                    id="status"
+                                    value={editingItem.status}
+                                    onChange={(e) => setEditingItem({ ...editingItem, status: e.target.value })}
+                                >
+                                    <option value="Available">Available</option>
+                                    <option value="Low Stock">Low Stock</option>
+                                </select>
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="quantity">Quantity</label>
+                                <input
+                                    type="number"
+                                    id="quantity"
+                                    value={editingItem.quantity}
+                                    onChange={(e) => setEditingItem({ ...editingItem, quantity: +e.target.value })}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="remarks">Remarks</label>
+                                <input
+                                    type="text"
+                                    id="remarks"
+                                    value={editingItem.remarks}
+                                    onChange={(e) => setEditingItem({ ...editingItem, remarks: e.target.value })}
+                                />
+                            </div>
+                            <div className="form-group">
+                                <label htmlFor="type">Type</label>
+                                <select
+                                    id="type"
+                                    value={editingItem.type}
+                                    onChange={(e) => setEditingItem({ ...editingItem, type: e.target.value })}
+                                >
+                                    <option value="TIME IN">TIME IN</option>
+                                    <option value="TIME OUT">TIME OUT</option>
+                                </select>
+                            </div>
+                            <div className="inventory-modal-footer">
+                                <button type="button" onClick={closeModal}>Cancel</button>
+                                <button type="submit">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            )}
 
             <div className="pagination-container">
                 <div className="pagination-info">
@@ -118,14 +231,14 @@ function Inventory() {
                         onClick={goToPreviousPage}
                         disabled={currentPage === 1}
                     >
-                        <MdKeyboardArrowLeft size={'20px'}/>
+                        <MdKeyboardArrowLeft size={'20px'} />
                     </button>
                     <button
                         className="pagination-arrow"
                         onClick={goToNextPage}
                         disabled={currentPage === totalPages}
                     >
-                        <MdKeyboardArrowRight size={'20px'}/>
+                        <MdKeyboardArrowRight size={'20px'} />
                     </button>
                 </div>
             </div>

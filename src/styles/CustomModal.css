@@ -1,0 +1,152 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 500px;
+    height: auto;
+    max-height: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: center;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    position: relative;
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+  }
+  .modal-title {
+    font-family: "Roboto", sans-serif;
+    font-size: 25px;
+     top: 10px;
+     margin: 0;
+     padding: 0;
+     left: 10px;
+    display: flex;
+    justify-content: start;
+    position: relative;
+    color: black;
+
+  }
+  
+  .modal-info-message {
+    font-size: 14px;
+    color: #333;
+    margin-top: 10px;
+    font-weight: 400;
+    display: flex;
+    left: 20px;
+    margin-bottom: 10px;
+    
+  }
+
+  .check-icon-container {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+
+  .custom-check-icon {
+    width: 60px;
+    height: 60px;
+    background-image: url('../assets/check-circle.png'); 
+    background-size: cover;
+    background-position: center;
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: check-animation 0.5s forwards ease-in-out;
+    margin-top: 20px;
+  }
+
+.check-icon-container {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+  border-top: 1px solid black;
+  width: 100%;
+  padding-top: 10px;
+}
+
+  @keyframes check-animation {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.2);
+    }
+    70% {
+      transform: scale(0.9);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  .modal-header{
+    border-bottom: 5px solid #3B82F6;
+    opacity: 60%;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+    border-top: 1px solid black;
+    width: 100%;
+    padding-top: 10px; 
+    box-sizing: border-box; 
+  }
+  
+  .modal-button {
+    background-color: #02298A;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    right: 20px;
+    position: relative;
+    margin-bottom: 20px;
+  }
+  
+  .modal-button:hover {
+    background-color: #4caef9;
+  }
+  
+  .cancel-button {
+    background-color: rgba(17, 16, 16, 0.068);
+    color: rgb(0, 0, 0);
+    border: 1px solid black;
+  }
+  
+  .cancel-button:hover {
+    background-color: #f44336;
+  }
+  

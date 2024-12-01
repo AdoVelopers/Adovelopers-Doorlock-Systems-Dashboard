@@ -55,8 +55,9 @@ function Header() {
             }
         });
     };
-    
-    
+
+    const closeDropdown = () => setShowDropdown(false);
+
     return (
         <div className="global-header">
             <div className="header-content">
@@ -85,19 +86,28 @@ function Header() {
                             <IoIosArrowDropdown />
                         </button>
                         {showDropdown && (
-                       <div className="dropdown-menu">
-                       <a className="dropdown-item" href="/editprofile">
-                           <Link to="/editprofile">Profile</Link>
-                       </a>
-                       <a className="dropdown-item" href="/settings">Settings</a>
-                       <button
-                           className="dropdown-item"
-                           onClick={handleLogout}
-                       >
-                           Logout
-                       </button>
-                   </div>
-                   
+                            <div className="dropdown-menu">
+                                <Link 
+                                    to="/editprofile" 
+                                    className="dropdown-item" 
+                                    onClick={closeDropdown}
+                                >
+                                    Edit Profile
+                                </Link>
+                                <Link 
+                                    to="/settings" 
+                                    className="dropdown-item" 
+                                    onClick={closeDropdown}
+                                >
+                                    Settings
+                                </Link>
+                                <button
+                                    className="dropdown-item"
+                                    onClick={handleLogout}
+                                >
+                                    Logout
+                                </button>
+                            </div>
                         )}
                     </div>
                 </div>
