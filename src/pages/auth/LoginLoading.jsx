@@ -1,49 +1,58 @@
 import React, { useState, useEffect } from 'react';
+import { FaDoorClosed, FaDoorOpen } from 'react-icons/fa';
 
 function LoginLoading() {
   const names = ['Karl Bernaldez', 'Bryan', 'Juan'];
   const [currentName, setCurrentName] = useState(names[0]);
-  const [dots, setDots] = useState('.....');
+  const [isDoorOpen, setIsDoorOpen] = useState(false);
+  const [unlockCount, setUnlockCount] = useState(0);
 
   useEffect(() => {
+
     const nameChangeInterval = setInterval(() => {
-      setCurrentName(prevName => {
+      setCurrentName((prevName) => {
         const currentIndex = names.indexOf(prevName);
         const nextIndex = (currentIndex + 1) % names.length;
         return names[nextIndex];
       });
     }, 3000);
 
-    const dotAnimationInterval = setInterval(() => {
-      setDots(prevDots => {
-        if (prevDots.length === 5) return '.';
-        return prevDots + '.';
+    const doorAnimationInterval = setInterval(() => {
+      setIsDoorOpen((prevState) => {
+        if (!prevState) setUnlockCount((prevCount) => prevCount + 1);
+        return !prevState;
       });
-    }, 600);
+    }, 400);
+
+    if (unlockCount >= 3) {
+      clearInterval(doorAnimationInterval);
+    }
 
     return () => {
       clearInterval(nameChangeInterval);
-      clearInterval(dotAnimationInterval);
+      clearInterval(doorAnimationInterval);
     };
-  }, []);
+  }, [unlockCount, names]);
 
   return (
     <div>
       <div>
         <h1>Welcome {currentName}</h1>
         <div>
-          Please wait for the door to open
-          <span
-            style={{
-              fontWeight: 'bold',
-              fontSize: '30px',
-              background: 'black',
-              WebkitBackgroundClip: 'text',
-              color: 'transparent',
-            }}
-          >
-            {dots}
-          </span>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <span style={{ marginRight: '10px' }}>Please wait for the door to open.....</span>
+            <span
+              style={{
+                fontSize: '40px',
+                marginTop: '5px',
+                color: isDoorOpen ? 'black' : 'red',
+              }}
+            >
+              {isDoorOpen ? <FaDoorOpen /> : <FaDoorClosed />}
+            </span>
+          </div>
+        </div>
+        <div style={{ marginTop: '10px', fontSize: '16px' }}>
         </div>
       </div>
     </div>
