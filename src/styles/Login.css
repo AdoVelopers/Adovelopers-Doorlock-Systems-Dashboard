@@ -120,7 +120,24 @@ h3 {
     color: #4a5568;
     outline: none;
 }
+.input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    max-width: 25rem;
+    width: 100%;
+}
 
+.input-icon {
+    position: absolute;
+    left: 10px;
+    font-size: 1.2rem;
+    color: #999;
+}
+
+.form-input.with-icon {
+    padding-left: 35px; /* Space for the icon */
+}
 .form-input:focus {
     box-shadow: 0 0 0 0.125rem #3182ce;
     border-color: #3182ce;

@@ -49,9 +49,7 @@ function Header() {
             if (result.isConfirmed) {
                 localStorage.removeItem('loginSuccess');
                 sessionStorage.clear();
-                Swal.fire("Logged out", "You have been successfully logged out.", "success").then(() => {
-                    navigate("/"); 
-                });
+                navigate("/", { state: { message: "You have successfully logged out." } }); // Pass message to login page
             }
         });
     };

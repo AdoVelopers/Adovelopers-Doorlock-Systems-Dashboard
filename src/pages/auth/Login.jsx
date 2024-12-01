@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../../styles/Login.css';
 import FingerPrint from '../../assets/Frame.png';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { IoPersonOutline } from "react-icons/io5";
+import { MdLockOutline } from "react-icons/md";
 import { useUser } from '../../protectedRoutes/UserContext';
-import LoginLoading from './LoginLoading'; 
+import LoginLoading from './LoginLoading';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [eyeClass, setEyeClass] = useState('');
-    const [loading, setLoading] = useState(false); 
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
     const { loginUser } = useUser();
-    const [message, setMessage] = useState("");
 
     useEffect(() => {
-        if (location.state && location.state.message) {
-            setMessage(location.state.message);
+        if (location.state?.message) {
+            Swal.fire({
+                title: "Logged Out",
+                text: location.state.message,
+                icon: "success",
+                confirmButtonText: "OK",
+            });
         }
     }, [location.state]);
 
@@ -45,7 +52,6 @@ function Login() {
         e.preventDefault();
         setLoading(true);
         
-
         setTimeout(() => {
             if (email === defaultUser.email && password === defaultUser.password) {
                 loginUser({ email, role: 'superadmin' });
@@ -74,9 +80,6 @@ function Login() {
 
     return (
         <div className="container">
-            <div>
-                {message && <div className="alert alert-success">{message}</div>}
-            </div>
             <div className="left-pane">
                 <h1 className="title">AdoVelopers</h1>
                 <p className="subtitle">The best fingerprint locked door.</p>
@@ -84,7 +87,7 @@ function Login() {
             </div>
             <div className="right-pane">
                 {loading ? (
-                    <LoginLoading name="Karl Bernaldez" /> 
+                    <LoginLoading name="Karl Bernaldez" />
                 ) : (
                     <div className="login-container">
                         <div className="icon-container">
@@ -99,23 +102,29 @@ function Login() {
                         <form onSubmit={handleLogin}>
                             <div className="form-group">
                                 <label htmlFor="email" className="form-label">Email Address</label>
-                                <input
-                                    id="email"
-                                    type="email"
-                                    className="form-input"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
+                                <div className="input-container">
+                                    <IoPersonOutline className="input-icon" />
+                                    <input
+                                        id="email"
+                                        type="email"
+                                        className="form-input with-icon"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder="Enter your email"
+                                    />
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="password" className="form-label">Password</label>
-                                <div className="password-container">
+                                <div className="input-container">
+                                    <MdLockOutline className="input-icon" />
                                     <input
                                         id="password"
                                         type={showPassword ? 'text' : 'password'}
-                                        className="form-input"
+                                        className="form-input with-icon"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
+                                        placeholder="Enter your password"
                                     />
                                     <span
                                         className={`eye-icon ${eyeClass}`}
@@ -136,14 +145,10 @@ function Login() {
                             <div className="form-group">
                                 <button type="submit" className="login-btn">Log in</button>
                             </div>
-                            {/* <div className="signup-link">
-                                <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
-                            </div> */}
                         </form>
                     </div>
                 )}
             </div>
-
             <div className='circle-bottom'></div>
             <div className='circle-bottom2'></div>
         </div>
