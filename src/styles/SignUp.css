@@ -186,3 +186,9 @@
     
 
 }
+
+.signup-form-label .asterisk {
+    color: red;
+    font-weight: bold; 
+  }
+  

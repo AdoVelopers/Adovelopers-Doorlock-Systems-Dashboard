@@ -37,7 +37,7 @@ function LoginLoading() {
             style={{
               fontWeight: 'bold',
               fontSize: '30px',
-              background: '#0575E6',
+              background: 'black',
               WebkitBackgroundClip: 'text',
               color: 'transparent',
             }}
