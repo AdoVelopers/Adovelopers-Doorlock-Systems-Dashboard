@@ -117,3 +117,113 @@
         padding: 0.5rem;
     }
 }
+.admin-modal-container .modal-content {
+    border-radius: 8px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
+    align-items: stretch; 
+    max-width: 800px;
+    width: 100%; 
+    margin: 0 auto;
+    height: 100%;
+}
+
+.admin-modal-container .modal-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%; 
+    max-width: 800px;
+    height: auto; 
+}
+
+.admin-modal-container .admin-modal-header {
+    border-bottom: 1px solid #ddd;
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 8px 8px 0 0;
+    overflow: hidden; 
+}
+
+.admin-modal-container .admin-modal-header .close {
+    color: white;
+    font-size: 1.5rem;
+    opacity: 1;
+}
+
+.admin-modal-container .modal-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.admin-modal-container .admin-modal-body {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    flex-grow: 1; 
+    overflow-y: auto; 
+}
+
+.module-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.module-name {
+    font-weight: bold;
+    flex: 1;
+    text-align: left;
+    padding-left: 15px;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: space-between;
+    flex: 2;
+    padding-right: 15px;
+}
+
+.checkbox-item {
+    margin: 0 10px;
+}
+
+.admin-modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.admin-modal-btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+}
+
+.admin-modal-btn-secondary {
+    background-color: #ddd;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.admin-modal-btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.admin-modal-btn-secondary:hover {
+    background-color: #ccc;
+}

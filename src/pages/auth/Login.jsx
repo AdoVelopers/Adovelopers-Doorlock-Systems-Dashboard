@@ -48,29 +48,40 @@ function Login() {
         role: 'user',
     };
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        setLoading(true);
-        
-        setTimeout(() => {
-            if (email === defaultUser.email && password === defaultUser.password) {
-                loginUser({ email, role: 'superadmin' });
-                localStorage.setItem('loginSuccess', 'true');
-                navigate('/dashboard', { state: { success: true } });
-            } else if (email === defaultAdmin.email && password === defaultAdmin.password) {
-                loginUser({ email, role: 'admin' });
-                localStorage.setItem('loginSuccess', 'true');
-                navigate('/dashboard', { state: { success: true } }); 
-            } else if (email === defaultUserLogin.email && password === defaultUserLogin.password) {
-                loginUser({ email, role: 'user' });
-                localStorage.setItem('loginSuccess', 'true');
-                navigate('/dashboard', { state: { success: true } }); 
-            } else {
-                Swal.fire('Invalid credentials, please try again.');
-                setLoading(false);
+const handleLogin = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    setTimeout(() => {
+        const users = [
+            { email: 'superadmin@gmail.com', password: 'pass123', role: 'superadmin' },
+            { email: 'admin@gmail.com', password: 'adminpass', role: 'admin' },
+            { email: 'user@gmail.com', password: 'userpass', role: 'user' }
+        ];
+
+        const matchedUser = users.find(user => user.email === email && user.password === password);
+
+        if (matchedUser) {
+            const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+            const userExists = existingUsers.some(user => user.email === matchedUser.email);
+
+            if (!userExists) {
+                existingUsers.push(matchedUser);
+
+                localStorage.setItem('users', JSON.stringify(existingUsers));
             }
-        }, 2000); 
-    };
+
+            localStorage.setItem('user', JSON.stringify(matchedUser));
+            loginUser(matchedUser); 
+            navigate('/dashboard', { state: { success: true } });
+        } else {
+            Swal.fire('Invalid credentials, please try again.');
+            setLoading(false);
+        }
+    }, 2000);
+};
+
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
