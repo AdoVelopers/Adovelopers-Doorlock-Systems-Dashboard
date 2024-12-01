@@ -136,9 +136,9 @@ function Login() {
                             <div className="form-group">
                                 <button type="submit" className="login-btn">Log in</button>
                             </div>
-                            <div className="signup-link">
+                            {/* <div className="signup-link">
                                 <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
-                            </div>
+                            </div> */}
                         </form>
                     </div>
                 )}
