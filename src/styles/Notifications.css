@@ -1,0 +1,176 @@
+/* General container styling */
+.notifications-container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Table wrapper */
+.table-wrapper {
+    margin-top: 20px;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Table styling */
+.notifications-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+    background-color: #fff;
+}
+
+.notifications-table thead {
+    background-color: #f5f5f5;
+}
+
+.notifications-table th,
+.notifications-table td {
+    text-align: left;
+    padding: 10px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.notifications-table th {
+    font-weight: bold;
+    color: #333;
+}
+
+.notifications-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.notifications-table td {
+    font-size: 14px;
+    color: #555;
+}
+
+/* Status coloring */
+.status-active {
+    color: green;
+    font-weight: bold;
+}
+
+.status-inactive {
+    color: red;
+    font-weight: bold;
+}
+
+/* Buttons styling */
+.editbtn,
+.deletebtn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+.editbtn img,
+.deletebtn img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Pagination styling */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.pagination-info {
+    font-size: 14px;
+    color: #555;
+}
+
+.pagination-arrows {
+    display: flex;
+}
+
+.pagination-arrow {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 5px 10px;
+    margin: 0 5px;
+    transition: background-color 0.3s;
+}
+
+.pagination-arrow:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.pagination-arrow:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+/* Dialog styling */
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.dialog-content h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+}
+
+.dialog-content p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.dialog-actions button {
+    padding: 8px 15px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.dialog-actions button:first-child {
+    background-color: #dc3545;
+    color: white;
+}
+
+.dialog-actions button:first-child:hover {
+    background-color: #b02a37;
+}
+
+.dialog-actions button:last-child {
+    background-color: #6c757d;
+    color: white;
+}
+
+.dialog-actions button:last-child:hover {
+    background-color: #5a6268;
+}
