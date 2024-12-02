@@ -1,4 +1,3 @@
-/* General container styling */
 .notifications-container {
     display: flex;
     flex-direction: column;
@@ -6,48 +5,44 @@
     font-family: Arial, sans-serif;
 }
 
-/* Table wrapper */
 .table-wrapper {
     margin-top: 20px;
-    overflow-x: auto;
-    border: 1px solid #ddd;
+    width: 93%;
+    box-sizing: border-box;
     border-radius: 8px;
+    overflow-x: auto;
+    margin-left: 230px;
 }
 
-/* Table styling */
 .notifications-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 0 auto;
-    background-color: #fff;
-}
 
-.notifications-table thead {
-    background-color: #f5f5f5;
+    width: 90%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border: 0.0625rem solid #ddd;
 }
 
 .notifications-table th,
 .notifications-table td {
+    padding: 0.625rem;
     text-align: left;
-    padding: 10px 15px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 0.0625rem solid #ddd;
 }
 
 .notifications-table th {
+    background-color: #f4f4f4;
+    color: black;
     font-weight: bold;
-    color: #333;
 }
 
-.notifications-table tr:hover {
+.notifications-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.notifications-table td {
-    font-size: 14px;
-    color: #555;
+.notifications-table tr:hover {
+    background-color: #f1f1f1;
 }
 
-/* Status coloring */
 .status-active {
     color: green;
     font-weight: bold;
@@ -58,23 +53,20 @@
     font-weight: bold;
 }
 
-/* Buttons styling */
 .editbtn,
 .deletebtn {
     border: none;
     background: none;
     cursor: pointer;
-    padding: 5px;
-    margin-right: 5px;
+    margin-right: 0.3125rem;
 }
 
 .editbtn img,
 .deletebtn img {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
 }
 
-/* Pagination styling */
 .pagination-container {
     display: flex;
     justify-content: space-between;
@@ -111,7 +103,6 @@
     background-color: #0056b3;
 }
 
-/* Dialog styling */
 .dialog {
     position: fixed;
     top: 0;
@@ -173,4 +164,34 @@
 
 .dialog-actions button:last-child:hover {
     background-color: #5a6268;
+}
+
+@media (max-width: 48rem) {
+    .notifications-container {
+        margin-left: 0;
+    }
+
+    .notifications-table {
+        font-size: 0.875rem;
+    }
+
+    .table-wrapper {
+        overflow-x: scroll;
+    }
+
+    .notifications-table th,
+    .notifications-table td {
+        padding: 0.5rem;
+    }
+}
+
+@media (max-width: 30rem) {
+    .notifications-table {
+        font-size: 0.75rem;
+    }
+
+    .notifications-table th,
+    .notifications-table td {
+        padding: 0.5rem;
+    }
 }

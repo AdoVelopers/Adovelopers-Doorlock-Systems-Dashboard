@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Edit from "../assets/edit.png";
 import Delete from "../assets/delete.png";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
+import Swal from 'sweetalert2';
 
 function Notifications() {
     const [notificationsData, setNotificationsData] = useState([
@@ -14,9 +15,9 @@ function Notifications() {
     ]);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [showDeleteDialog, setShowDeleteDialog] = useState(false);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [selectedNotification, setSelectedNotification] = useState(null);
+    const [editForm, setEditForm] = useState({});
     const itemsPerPage = 3;
 
     const totalPages = Math.ceil(notificationsData.length / itemsPerPage);
@@ -33,24 +34,46 @@ function Notifications() {
 
     const openEditDialog = (notification) => {
         setSelectedNotification(notification);
+        setEditForm(notification);
         setShowEditDialog(true);
-    };
-
-    const openDeleteDialog = (notification) => {
-        setSelectedNotification(notification);
-        setShowDeleteDialog(true);
     };
 
     const closeDialog = () => {
         setShowEditDialog(false);
-        setShowDeleteDialog(false);
         setSelectedNotification(null);
     };
 
-    const deleteNotification = () => {
+    const deleteNotification = (notification) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setNotificationsData((prevData) =>
+                    prevData.filter((item) => item.id !== notification.id)
+                );
+                Swal.fire('Deleted!', 'Notification has been deleted.', 'success');
+            }
+        });
+    };
+
+    const handleEditChange = (e) => {
+        const { name, value } = e.target;
+        setEditForm((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const saveEdit = () => {
         setNotificationsData((prevData) =>
-            prevData.filter((notification) => notification.id !== selectedNotification.id)
+            prevData.map((item) =>
+                item.id === editForm.id ? { ...item, ...editForm } : item
+            )
         );
+        Swal.fire('Success', 'Notification updated successfully!', 'success');
         closeDialog();
     };
 
@@ -85,7 +108,10 @@ function Notifications() {
                                         <button className="editbtn" onClick={() => openEditDialog(notification)}>
                                             <img src={Edit} alt="Edit" />
                                         </button>
-                                        <button className="deletebtn" onClick={() => openDeleteDialog(notification)}>
+                                        <button
+                                            className="deletebtn"
+                                            onClick={() => deleteNotification(notification)}
+                                        >
                                             <img src={Delete} alt="Delete" />
                                         </button>
                                     </td>
@@ -121,34 +147,74 @@ function Notifications() {
                 </div>
             </div>
 
-            {/* Delete Dialog */}
-            {showDeleteDialog && (
-                <div className="dialog">
-                    <div className="dialog-content">
-                        <h3>Confirm Delete</h3>
-                        <p>Are you sure you want to delete this notification?</p>
-                        <div className="dialog-actions">
-                            <button onClick={deleteNotification}>Yes</button>
-                            <button onClick={closeDialog}>No</button>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Edit Dialog */}
             {showEditDialog && (
                 <div className="dialog">
                     <div className="dialog-content">
                         <h3>Edit Notification</h3>
-                        <p>Edit details for {selectedNotification?.name}</p>
-                        {/* Add your edit form here */}
+                        <form>
+                            <label>
+                                Notification ID:
+                                <input
+                                    type="text"
+                                    name="notificationId"
+                                    value={editForm.notificationId}
+                                    onChange={handleEditChange}
+                                />
+                            </label>
+                            <label>
+                                User ID:
+                                <input
+                                    type="text"
+                                    name="userId"
+                                    value={editForm.userId}
+                                    onChange={handleEditChange}
+                                />
+                            </label>
+                            <label>
+                                Name:
+                                <input
+                                    type="text"
+                                    name="name"
+                                    value={editForm.name}
+                                    onChange={handleEditChange}
+                                />
+                            </label>
+                            <label>
+                                Time:
+                                <input
+                                    type="text"
+                                    name="time"
+                                    value={editForm.time}
+                                    onChange={handleEditChange}
+                                />
+                            </label>
+                            <label>
+                                Date:
+                                <input
+                                    type="date"
+                                    name="date"
+                                    value={editForm.date}
+                                    onChange={handleEditChange}
+                                />
+                            </label>
+                            <label>
+                                Type:
+                                <input
+                                    type="text"
+                                    name="type"
+                                    value={editForm.type}
+                                    onChange={handleEditChange}
+                                />
+                            </label>
+                        </form>
                         <div className="dialog-actions">
-                            <button onClick={closeDialog}>Save</button>
+                            <button onClick={saveEdit}>Save</button>
                             <button onClick={closeDialog}>Cancel</button>
                         </div>
                     </div>
                 </div>
             )}
+
         </div>
     );
 }
