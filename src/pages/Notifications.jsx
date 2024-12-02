@@ -82,7 +82,7 @@ function Notifications() {
             <Sidebar />
             <div className="notifications-content">
                 <h1>Notifications</h1>
-                <div className="table-wrapper">
+                <div className="table-wrapper-notifications">
                     <table className="notifications-table">
                         <thead>
                             <tr>
