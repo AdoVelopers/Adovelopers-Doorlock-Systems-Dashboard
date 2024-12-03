@@ -6,6 +6,7 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
+
 function Header() {
     const [showDropdown, setShowDropdown] = useState(false);
     const [user, setUser] = useState(null);
@@ -98,6 +99,14 @@ function Header() {
                                     onClick={closeDropdown}
                                 >
                                     Settings
+                                </Link>
+
+                                <Link 
+                                    to="/notifications" 
+                                    className="dropdown-item" 
+                                    onClick={closeDropdown}
+                                >
+                                    Notifications
                                 </Link>
                                 <button
                                     className="dropdown-item"

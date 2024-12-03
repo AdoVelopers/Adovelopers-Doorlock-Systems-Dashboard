@@ -11,6 +11,7 @@ import RegularUsers from "./pages/users/Users";
 import Inventory from "./pages/Inventory";
 import EditProfile from "./pages/users/EditProfile"; 
 import ProtectedRoutes from "./protectedRoutes/ProtectedRoutes";
+import Notifications from "./pages/Notifications";
 
 function HeaderRouteCheck() {
   const location = useLocation();
@@ -41,6 +42,14 @@ function App() {
             element={
               <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
                 <Timelogs />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/Notifications"
+            element={
+              <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
+                <Notifications />
               </ProtectedRoutes>
             }
           />

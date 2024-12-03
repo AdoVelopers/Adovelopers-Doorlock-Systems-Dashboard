@@ -1,42 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../styles/Inventory.css';
 import Sidebar from "../components/Sidebar";
 import Edit from "../assets/edit.png";
 import Delete from "../assets/delete.png";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-import Swal from 'sweetalert2'; 
+import Swal from 'sweetalert2';
+import axios from 'axios'; // Import Axios for HTTP requests
 
 function Inventory() {
-    const [inventoryData, setInventoryData] = useState([
-        { id: 1, itemName: 'Fingerprint Scanner', status: 'Available', quantity: 15, remarks: '2024-11-28', type: 'TIME IN' },
-        { id: 2, itemName: 'Camera', status: 'Low Stock', quantity: 2, remarks: '2024-11-28', type: 'TIME OUT' },
-        { id: 3, itemName: 'Keyboard', status: 'Available', quantity: 10, remarks: '2024-11-28', type: 'TIME IN' },
-        { id: 4, itemName: 'Monitor', status: 'Available', quantity: 5, remarks: '2024-11-28', type: 'TIME OUT' },
-        { id: 5, itemName: 'Mouse', status: 'Low Stock', quantity: 3, remarks: '2024-11-28', type: 'TIME IN' },
-        { id: 6, itemName: 'Printer', status: 'Available', quantity: 7, remarks: '2024-11-28', type: 'TIME OUT' },
-        { id: 7, itemName: 'Router', status: 'Available', quantity: 4, remarks: '2024-11-28', type: 'TIME IN' },
-        { id: 8, itemName: 'Scanner', status: 'Available', quantity: 6, remarks: '2024-11-28', type: 'TIME OUT' },
-        { id: 9, itemName: 'Webcam', status: 'Low Stock', quantity: 2, remarks: '2024-11-28', type: 'TIME IN' },
-        { id: 10, itemName: 'Microphone', status: 'Available', quantity: 8, remarks: '2024-11-28', type: 'TIME OUT' },
-    ]);
-
+    const [inventoryData, setInventoryData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingItem, setEditingItem] = useState(null);
+
+    // Fetch data when the component mounts
+    useEffect(() => {
+        // Replace the URL with your actual backend URL
+        axios.get('http://54.252.176.21:8000/api/inventory')
+            .then((response) => {
+                setInventoryData(response.data); // Set the fetched data to state
+            })
+            .catch((error) => {
+                console.error("Error fetching data:", error);
+            });
+    }, []); // Empty dependency array means this effect runs once when the component mounts
 
     const totalPages = Math.ceil(inventoryData.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
     const currentData = inventoryData.slice(startIndex, startIndex + itemsPerPage);
 
     const handleQuantityChange = (id, increment) => {
-        setInventoryData((prevData) =>
-            prevData.map((item) =>
-                item.id === id
-                    ? { ...item, quantity: item.quantity + (increment ? 1 : item.quantity > 0 ? -1 : 0) }
-                    : item
-            )
+        const itemToUpdate = inventoryData.find((item) => item._id === id);
+    
+        if (!itemToUpdate) return;
+    
+        const newQuantity = itemToUpdate.quantity + (increment ? 1 : itemToUpdate.quantity > 0 ? -1 : 0);
+    
+        if (newQuantity < 0) return;
+    
+        const updatedData = inventoryData.map((item) =>
+            item._id === id ? { ...item, quantity: newQuantity } : item
         );
+        setInventoryData(updatedData);
+    
+        axios
+            .patch(`http://54.252.176.21:8000/api/inventory/${itemToUpdate.item_no}`, { quantity: newQuantity })
+            .then((response) => {
+                console.log("Quantity updated successfully:", response.data);
+            })
+            .catch((error) => {
+                console.error("Error updating quantity:", error);
+                setInventoryData((prevData) =>
+                    prevData.map((item) =>
+                        item._id === id ? { ...item, quantity: itemToUpdate.quantity } : item
+                    )
+                );
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Failed to update the quantity. Please try again.',
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                });
+            });
     };
 
     const openEditModal = (item) => {
@@ -53,7 +79,7 @@ function Inventory() {
         e.preventDefault();
         setInventoryData((prevData) =>
             prevData.map((item) =>
-                item.id === editingItem.id ? editingItem : item
+                item._id === editingItem._id ? editingItem : item
             )
         );
         closeModal();
@@ -77,7 +103,7 @@ function Inventory() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                setInventoryData((prevData) => prevData.filter(item => item.id !== id));
+                setInventoryData((prevData) => prevData.filter(item => item._id !== id)); // Change 'id' to '_id'
                 Swal.fire(
                     'Deleted!',
                     'The item has been deleted.',
@@ -114,26 +140,27 @@ function Inventory() {
                     </thead>
                     <tbody>
                         {currentData.map((item) => (
-                            <tr key={item.id}>
-                                <td>{item.id}</td>
-                                <td>{item.itemName}</td>
+                            <tr key={item._id}> {/* Use _id instead of id */}
+                                <td>{item.item_no}</td> {/* Replace id with item_no if necessary */}
+                                <td>{item.item_name}</td> {/* Replace itemName if necessary */}
                                 <td className={item.status === 'Available' ? 'green' : 'red'}>
                                     {item.status}
                                 </td>
                                 <td>
                                     <button
                                         className="quantity-btn"
-                                        onClick={() => handleQuantityChange(item.id, false)}
+                                        onClick={() => handleQuantityChange(item._id, false)}
                                     >
                                         -
                                     </button>
                                     <span className="quantity-box">{item.quantity}</span>
                                     <button
                                         className="quantity-btn"
-                                        onClick={() => handleQuantityChange(item.id, true)}
+                                        onClick={() => handleQuantityChange(item._id, true)}
                                     >
                                         +
                                     </button>
+
                                 </td>
                                 <td>{item.remarks}</td>
                                 <td className="type-column">
@@ -147,7 +174,7 @@ function Inventory() {
                                     <button className="editbtn" onClick={() => openEditModal(item)}>
                                         <img src={Edit} alt="Edit" />
                                     </button>
-                                    <button className="deletebtn" onClick={() => handleDelete(item.id)}>
+                                    <button className="deletebtn" onClick={() => handleDelete(item._id)}>
                                         <img src={Delete} alt="Delete" />
                                     </button>
                                 </td>
@@ -156,7 +183,6 @@ function Inventory() {
                     </tbody>
                 </table>
             </div>
-
 
             {isModalOpen && (
                 <div className="inventory-modal-overlay">
@@ -168,8 +194,8 @@ function Inventory() {
                                 <input
                                     type="text"
                                     id="itemName"
-                                    value={editingItem.itemName}
-                                    onChange={(e) => setEditingItem({ ...editingItem, itemName: e.target.value })}
+                                    value={editingItem.item_name}
+                                    onChange={(e) => setEditingItem({ ...editingItem, item_name: e.target.value })}
                                 />
                             </div>
                             <div className="form-group">

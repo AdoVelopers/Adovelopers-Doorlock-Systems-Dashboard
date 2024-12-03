@@ -147,7 +147,7 @@ const handleLogin = (e) => {
                                 </div>
                             </div>
                             <div className="form-options">
-                                <label className="checkbox-container">
+                                <label className="checkbox-login">
                                     <input type="checkbox" />
                                     <span className="checkbox-label">Remember me</span>
                                 </label>

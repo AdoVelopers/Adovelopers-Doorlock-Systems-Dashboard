@@ -53,10 +53,14 @@ function Sidebar() {
                         
                     </li>
                        )}
+
+                  {/*   <li className='timelogs'>
+
+                    </li> */}
                          {user && user.role === 'superadmin' && (
-                    <li className={isActive('/approval') ? 'active' : ''}>
-                        <Link to="/approval">
-                            <img src={Approval} alt="" /> For Approval
+                    <li className={isActive('/notifications') ? 'active' : ''}>
+                        <Link to="/notifications">
+                            <img src={Approval} alt="" /> Notifications
                         </Link>
                         
                     </li>

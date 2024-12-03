@@ -166,11 +166,11 @@ h3 {
     margin-bottom: 1.5rem;
 }
 
-.checkbox-container {
+/* .checkbox-container {
     display: flex;
     align-items: center;
 }
-
+ */
 .checkbox-label {
     font-size: 0.875rem;
     color: #4a5568;
@@ -277,6 +277,11 @@ h3 {
 
 .eye-icon.bounce {
     animation: bounce 0.5s ease-in-out infinite;
+}
+
+.checkbox-login{
+    margin-right: 20px !important;
+
 }
 
 

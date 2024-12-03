@@ -89,7 +89,7 @@ function Timelogs() {
                             <th>TIMELOG ID</th>
                             <th>USER ID</th>
                             <th>NAME</th>
-                            <th>TIME IN</th>
+                            <th>TIME LOGGED</th>
                             <th>DATE LOGGED</th>
                             <th>TYPE</th>
                             <th>MANAGE</th>
