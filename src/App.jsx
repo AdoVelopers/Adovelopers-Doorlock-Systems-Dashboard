@@ -9,7 +9,8 @@ import Users from "./pages/users/Users";
 import Admin from "./pages/users/Admin";
 import RegularUsers from "./pages/users/Users";
 import Inventory from "./pages/Inventory";
-import EditProfile from "./pages/users/EditProfile"; 
+import EditProfile from "./pages/users/EditProfile";
+import Notifications from "./pages/Notifications"; // Import Notifications
 import ProtectedRoutes from "./protectedRoutes/ProtectedRoutes";
 import Notifications from "./pages/Notifications";
 
@@ -90,6 +91,15 @@ function App() {
             element={
               <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
                 <EditProfile />
+              </ProtectedRoutes>
+            }
+          />
+          {/* Notifications Route */}
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
+                <Notifications />
               </ProtectedRoutes>
             }
           />

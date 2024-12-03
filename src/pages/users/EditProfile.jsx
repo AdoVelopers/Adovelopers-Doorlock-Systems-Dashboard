@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../../components/Sidebar';
-import CustomModal from '../../components/CustomModal';
+import Swal from 'sweetalert2';
 import '../../styles/EditProfile.css';
 
 function EditProfile() {
@@ -8,16 +8,31 @@ function EditProfile() {
 
   const handleSave = () => {
 
-    setIsModalOpen(true);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Do you want to save the changes to your profile?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, save it!',
+      cancelButtonText: 'No, cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Saved!',
+          'Your profile has been updated.',
+          'success'
+        );
+      }
+    });
   };
 
   const handleCancel = () => {
-
     setIsModalOpen(false);
   };
 
   const handleNext = () => {
-
     console.log("Proceeding with next step");
     setIsModalOpen(false);
   };
@@ -66,13 +81,6 @@ function EditProfile() {
           </button>
         </div>
       </div>
-
-      <CustomModal
-        isOpen={isModalOpen}
-        onClose={handleCancel}
-        title="Name Change Detected"
-        onNext={handleNext}
-      />
     </>
   );
 }
