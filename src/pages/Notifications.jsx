@@ -3,7 +3,6 @@ import './../styles/Notifications.css';
 import Sidebar from "../components/Sidebar";
 import Edit from "../assets/edit.png";
 import Delete from "../assets/delete.png";
-import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from 'react-icons/md';
 import Swal from 'sweetalert2';
 
 function Notifications() {
@@ -14,23 +13,9 @@ function Notifications() {
         { id: 4, notificationId: 'N104', userId: 'U104', name: 'Bob Green', time: '01:45 PM', date: '2024-12-01', type: 'Warning' },
     ]);
 
-    const [currentPage, setCurrentPage] = useState(1);
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [selectedNotification, setSelectedNotification] = useState(null);
     const [editForm, setEditForm] = useState({});
-    const itemsPerPage = 3;
-
-    const totalPages = Math.ceil(notificationsData.length / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = notificationsData.slice(startIndex, startIndex + itemsPerPage);
-
-    const goToPreviousPage = () => {
-        if (currentPage > 1) setCurrentPage(currentPage - 1);
-    };
-
-    const goToNextPage = () => {
-        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-    };
 
     const openEditDialog = (notification) => {
         setSelectedNotification(notification);
@@ -80,70 +65,31 @@ function Notifications() {
     return (
         <div className="notifications-container">
             <Sidebar />
-            <div className="notifications-content">
+            <div className="notifications-content centered-content">
                 <h1>Notifications</h1>
-                <div className="table-wrapper-notifications">
-                    <table className="notifications-table">
-                        <thead>
-                            <tr>
-                                <th>NOTIFICATION ID</th>
-                                <th>USER ID</th>
-                                <th>NAME</th>
-                                <th>TIME</th>
-                                <th>DATE</th>
-                                <th>TYPE</th>
-                                <th>MANAGE</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {currentData.map((notification) => (
-                                <tr key={notification.id}>
-                                    <td>{notification.notificationId}</td>
-                                    <td>{notification.userId}</td>
-                                    <td>{notification.name}</td>
-                                    <td>{notification.time}</td>
-                                    <td>{notification.date}</td>
-                                    <td>{notification.type}</td>
-                                    <td>
-                                        <button className="editbtn" onClick={() => openEditDialog(notification)}>
-                                            <img src={Edit} alt="Edit" />
-                                        </button>
-                                        <button
-                                            className="deletebtn"
-                                            onClick={() => deleteNotification(notification)}
-                                        >
-                                            <img src={Delete} alt="Delete" />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
-                <div className="pagination-container">
-                    <div className="pagination-info">
-                        {`Showing ${startIndex + 1}-${Math.min(
-                            startIndex + itemsPerPage,
-                            notificationsData.length
-                        )} of ${notificationsData.length}`}
-                    </div>
-                    <div className="pagination-arrows">
-                        <button
-                            className="pagination-arrow"
-                            onClick={goToPreviousPage}
-                            disabled={currentPage === 1}
-                        >
-                            <MdKeyboardArrowLeft size={'20px'} />
-                        </button>
-                        <button
-                            className="pagination-arrow"
-                            onClick={goToNextPage}
-                            disabled={currentPage === totalPages}
-                        >
-                            <MdKeyboardArrowRight size={'20px'} />
-                        </button>
-                    </div>
+                <div className="notifications-row">
+                    {notificationsData.map((notification) => (
+                        <div key={notification.id} className="notification-card">
+                            <div className="notification-info">
+                                <h3>{notification.type}</h3>
+                                <p><strong>ID:</strong> {notification.notificationId}</p>
+                                <p><strong>User:</strong> {notification.name}</p>
+                                <p><strong>Time:</strong> {notification.time}</p>
+                                <p><strong>Date:</strong> {notification.date}</p>
+                            </div>
+                            <div className="notification-actions">
+                                <button className="editbtn" onClick={() => openEditDialog(notification)}>
+                                    <img src={Edit} alt="Edit" />
+                                </button>
+                                <button
+                                    className="deletebtn"
+                                    onClick={() => deleteNotification(notification)}
+                                >
+                                    <img src={Delete} alt="Delete" />
+                                </button>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
@@ -151,7 +97,7 @@ function Notifications() {
                 <div className="dialog">
                     <div className="dialog-content">
                         <h3>Edit Notification</h3>
-                        <form>
+                        <form className="edit-form">
                             <label>
                                 Notification ID:
                                 <input
@@ -214,7 +160,6 @@ function Notifications() {
                     </div>
                 </div>
             )}
-
         </div>
     );
 }
