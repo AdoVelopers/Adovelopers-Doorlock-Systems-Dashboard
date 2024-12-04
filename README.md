@@ -31,3 +31,4 @@ The system comprises the following key components:
 - Software:
   - [Python](https://www.python.org/) or [Arduino IDE](https://www.arduino.cc/en/Main/Software)
   - Database system (SQLite or MySQL) for storing user data (optional)
+ 
