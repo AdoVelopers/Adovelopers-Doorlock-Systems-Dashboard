@@ -1,7 +1,7 @@
 # Fingerprint Door Lock System
 
 ## Overview
-The **Fingerprint Door Lock System** is a biometric-based access control solution that leverages fingerprint scanning technology to secure doors and restrict access. This system ensures that only authorized personnel can access specific areas, enhancing both physical security and convenience.
+The **Fingerprint Door Lock System** is a biometric-based access control solution that leverages fingerprint scanning technology to secure doors and restrict access. This system ensures that only authorized personnel can access specific areas, enhancing both physical security and convenience. 
 
 ## Features
 - **Biometric Authentication**: Uses fingerprints for identifying individuals, eliminating the need for keys, access cards, or passwords.

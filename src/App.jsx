@@ -10,7 +10,6 @@ import Admin from "./pages/users/Admin";
 import RegularUsers from "./pages/users/Users";
 import Inventory from "./pages/Inventory";
 import EditProfile from "./pages/users/EditProfile";
-import Notifications from "./pages/Notifications"; // Import Notifications
 import ProtectedRoutes from "./protectedRoutes/ProtectedRoutes";
 import Notifications from "./pages/Notifications";
 
