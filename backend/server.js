@@ -4,7 +4,9 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const authRoutes = require('./routes/authRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
-const inventoryRoutes = require('./routes/inventoryRoute'); // Import inventory routes
+const inventoryRoutes = require('./routes/inventoryRoute');
+const userRoutes = require('./routes/userRoute');
+const timelogsRoutes = require('./routes/timelogsRoute');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -28,14 +30,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());  // Allows all origins
 
-// Use the auth routes for admin login/logout
 app.use('/api/auth', authRoutes);
-
-// Use the dashboard routes for fetching dashboard data
 app.use('/admin', dashboardRoutes);
-
-// Use the inventory routes for managing inventory
-app.use('/api/inventory', inventoryRoutes);  // Add this line to use the inventory routes
+app.use('/api/inventory', inventoryRoutes);
+app.use('/api/users', userRoutes); 
+app.use('/api/timelogs', timelogsRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

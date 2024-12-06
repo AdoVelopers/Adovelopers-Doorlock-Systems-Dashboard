@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const User = require('../models/User');
+const User = require('../models/Users');
 const Blacklist = require('../models/Blacklist');
 const Log = require('../models/Log');
 const jwt = require('jsonwebtoken');

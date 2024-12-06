@@ -15,13 +15,8 @@ function Users() {
         // Fetching users for approval from the backend API
         const fetchForApproval = async () => {
             try {
-                const response = await axios.get('http://54.252.176.21:8000/api/users/clients');
-                const sortedUsers = response.data.sort((a, b) => {
-                    if (a.active === 'Active' && b.active !== 'Active') return -1;
-                    if (a.active !== 'Active' && b.active === 'Active') return 1;
-                    return 0;
-                });
-                setUsersData(sortedUsers);
+                const response = await axios.get('http://54.252.176.21:8000/api/users/forApproval');
+                setUsersData(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -46,7 +41,7 @@ function Users() {
         <div className="users-container">
             <Sidebar />
             <div className="users-content">
-                <h1>User List</h1>
+                <h1>For Approvals</h1>
                 <div className="table-wrapper">
                     <table className="users-table">
                         <thead>
@@ -66,9 +61,7 @@ function Users() {
                                     <td>{user.full_name}</td>
                                     <td>{new Date(user.date).toLocaleDateString()}</td>
                                     <td>{user.role}</td>
-                                    <td className={user.active === 'Active' ? 'status-active' : 'status-inactive'}>
-                                        {user.active}
-                                    </td>
+                                    <td>{user.approved ? 'Approved' : 'Pending'}</td>
                                     <td>
                                         <button className="editbtn">
                                             <img src={Edit} alt="Edit" />

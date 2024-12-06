@@ -1,4 +1,4 @@
-const User = require('../models/User'); // Adjust the path as necessary
+const User = require('../models/Users'); // Adjust the path as necessary
 const Log = require('../models/Log'); // Adjust the path to your Log model
 const Notification = require('../models/Notification'); // Adjust the path to your Notification model
 

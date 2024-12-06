@@ -61,7 +61,7 @@ function Sidebar() {
                     )}
                     {user && user.role === 'superadmin' && (
                         <li
-                            className={`${(isActive('/users') || isActive('/admin') || isActive('/regular-users')) ? 'active' : ''}`}
+                            className={`${(isActive('/users') || isActive('/admin') || isActive('/regular-users') || isActive('/for-approval')) ? 'active' : ''}`}
                         >
                             <Link to="#" onClick={handleUsersClick} className="dropdown-trigger">
                                 <img src={Users} alt="" /> Users{" "}
@@ -78,6 +78,9 @@ function Sidebar() {
                                 </li>
                                 <li className={isActive('/regular-users') ? 'active' : ''}>
                                     <Link to="/regular-users" onClick={() => setActiveLink('/regular-users')}>Users</Link>
+                                </li>
+                                <li className={isActive('/for-approval') ? 'active' : ''}>
+                                    <Link to="/for-approval" onClick={() => setActiveLink('/for-approval')}>Pending</Link>
                                 </li>
                             </ul>
                         </li>

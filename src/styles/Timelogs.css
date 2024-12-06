@@ -1,8 +1,92 @@
-.timelogs-container {
-    padding: 1.25rem;
-    margin-left: 15.625rem;
-    margin-top: 1.25rem;
+
+.filters-container {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-end;
+    margin-right: 30px;
+    margin-top: -50px;
 }
+
+.reset-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px;
+    margin-right: 10px;
+    justify-content: center;
+}
+
+.reset-button {
+    background-color: #f44336; /* Red color */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    width: 150px; /* Align the button width with other filters */
+}
+
+.reset-button:hover {
+    background-color: #d32f2f; /* Darker red */
+}
+
+/* Each individual filter item */
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    padding: 1px;
+}
+
+/* Label for filter inputs */
+.filter-item label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Input fields for filters */
+.filter-item input,
+.filter-item select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Add focus styles for better UX */
+.filter-item input:focus,
+.filter-item select:focus {
+    border-color: #4d90fe;
+    outline: none;
+}
+
+/* Optional - style for filter section header or clear filters */
+.filter-item button {
+    background-color: #4d90fe;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.filter-item button:hover {
+    background-color: #357ae8;
+}
+
+
+.timelogs-container {
+    display: flex;
+    padding-left: 16.25rem;
+    padding-top: 1.25rem;
+    overflow-x: hidden;
+    flex-direction: column;
+}
+
+
 .timelogs-container p{
     font-size: 35px;
     font-weight: 500;

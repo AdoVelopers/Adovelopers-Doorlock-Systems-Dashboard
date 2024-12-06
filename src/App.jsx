@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Header from "./components/Header";
 import Timelogs from "./pages/Timelogs";
 import Users from "./pages/users/Users";
+import ForApproval from "./pages/users/ForApproval";
 import Admin from "./pages/users/Admin";
 import RegularUsers from "./pages/users/Users";
 import Inventory from "./pages/Inventory";
@@ -74,6 +75,14 @@ function App() {
             element={
               <ProtectedRoutes allowedRoles={["superadmin", "user"]}>
                 <RegularUsers />
+              </ProtectedRoutes>
+            }
+          />
+          <Route
+            path="/for-approval"
+            element={
+              <ProtectedRoutes allowedRoles={["superadmin"]}>
+                <ForApproval />
               </ProtectedRoutes>
             }
           />

@@ -1,30 +1,126 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './../styles/Timelogs.css';
 import Sidebar from "../components/Sidebar";
-import Edit from "../assets/edit.png";
-import Delete from "../assets/delete.png";
-import Swal from 'sweetalert2';
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-function Timelogs() {
-    const [timelogsData, setTimelogsData] = useState([
-        { id: 1, date: '2024-11-01', employee: 'TEST', hours: 8, task: 'Development', status: 'Completed', remarks: '', type: 'Sample' },
-        { id: 2, date: '2024-11-02', employee: 'TEST', hours: 7, task: 'Testing', status: 'In Progress', remarks: '', type: 'Time In/Out' },
-        { id: 3, date: '2024-11-03', employee: 'TEST', hours: 6, task: 'Deployment', status: 'Completed', remarks: '', type: 'Time In/Out' },
-        { id: 4, date: '2024-11-04', employee: 'TEST', hours: 8, task: 'Designing', status: 'Completed', remarks: '', type: 'Sample' },
-        { id: 5, date: '2024-11-05', employee: 'TEST', hours: 9, task: 'Research', status: 'In Progress', remarks: '', type: 'Sample' },
-        { id: 6, date: '2024-11-06', employee: 'TEST', hours: 8, task: 'Development', status: 'Completed', remarks: '', type: 'Time In/Out' },
-        { id: 7, date: '2024-11-07', employee: 'TEST', hours: 8, task: 'Security', status: 'Completed', remarks: '', type: 'Sample' },
-        { id: 8, date: '2024-11-08', employee: 'TEST', hours: 7, task: 'Testing', status: 'In Progress', remarks: '', type: 'Time In/Out' },
-    ]);
+import axios from 'axios';  // Import axios
 
+function Timelogs() {
+    const [timelogsData, setTimelogsData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
+    const itemsPerPage = 10;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editingTimelog, setEditingTimelog] = useState(null);
 
-    const totalPages = Math.ceil(timelogsData.length / itemsPerPage);
+    const [filters, setFilters] = useState({
+        userId: '',
+        name: '',
+        date: '',
+        time: '',
+        type: ''
+    });
+
+    const handleFilterChange = (e) => {
+        setFilters({
+            ...filters,
+            [e.target.name]: e.target.value
+        });
+    };
+
+    const resetFilters = () => {
+        setFilters({
+            userId: '',
+            name: '',
+            date: '',
+            time: '',
+            type: ''
+        });
+    };
+
+    // Fetch timelogs data from backend API
+    useEffect(() => {
+        const fetchTimelogs = async () => {
+            try {
+                const response = await axios.get('http://54.252.176.21:8000/api/timelogs');
+                setTimelogsData(response.data);  // Assuming response.data contains the timelog data
+            } catch (error) {
+                console.error('Error fetching timelogs:', error);
+            }
+        };
+
+        fetchTimelogs();
+    }, []);
+
+    const filterTimelogs = () => {
+        return timelogsData.filter(log => {
+            let isValid = true;
+
+            // Filter by userId
+            if (filters.userId && !log.user_id.includes(filters.userId)) {
+                isValid = false;
+            }
+
+            // Filter by name
+            if (filters.name && !log.full_name.toLowerCase().includes(filters.name.toLowerCase())) {
+                isValid = false;
+            }
+
+            // Filter by date
+            if (filters.date && new Date(log.date).toLocaleDateString() !== new Date(filters.date).toLocaleDateString()) {
+                isValid = false;
+            }
+
+            // Filter by time (convert to 24-hour format)
+            if (filters.time && log.time) {
+                const selectedTime = filters.time;
+                const logTime = convertTo24Hour(log.time);
+                if (logTime !== selectedTime) {
+                    isValid = false;
+                }
+            }
+
+            // Filter by type
+            if (filters.type && log.type !== filters.type) {
+                isValid = false;
+            }
+
+            return isValid;
+        });
+    };
+
+    const convertTo24Hour = (time12hr) => {
+        let [time, modifier] = time12hr.split(' ');
+        let [hours, minutes] = time.split(':');
+
+        if (modifier === 'PM' && hours !== '12') {
+            hours = (parseInt(hours) + 12).toString();
+        }
+        if (modifier === 'AM' && hours === '12') {
+            hours = '00';
+        }
+
+        return `${hours}:${minutes}`;
+    };
+
+    const convertTo12HourFormat = (time24hr) => {
+        let [hours, minutes] = time24hr.split(':');
+        let period = "AM";
+
+        if (parseInt(hours) >= 12) {
+            period = "PM";
+            if (parseInt(hours) > 12) {
+                hours -= 12;
+            }
+        }
+        if (parseInt(hours) === 0) {
+            hours = 12;
+        }
+        return `${hours}:${minutes} ${period}`;
+    };
+
+    const filteredData = filterTimelogs();
+    const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const startIndex = (currentPage - 1) * itemsPerPage;
-    const currentData = timelogsData.slice(startIndex, startIndex + itemsPerPage);
+    const currentData = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
     const goToPreviousPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
@@ -34,54 +130,65 @@ function Timelogs() {
         if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
-    const openEditModal = (log) => {
-        setEditingTimelog(log);
-        setIsModalOpen(true);
-    };
-
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setEditingTimelog(null);
-    };
-
-    const handleEditSubmit = (e) => {
-        e.preventDefault();
-        setTimelogsData((prevData) =>
-            prevData.map((log) =>
-                log.id === editingTimelog.id ? editingTimelog : log
-            )
-        );
-        closeModal();
-
-        Swal.fire({
-            title: 'Success!',
-            text: 'Timelog has been updated successfully.',
-            icon: 'success',
-            confirmButtonText: 'OK',
-        });
-    };
-
-    const handleDelete = (id) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: 'Once deleted, this timelog cannot be recovered!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                setTimelogsData((prevData) => prevData.filter(log => log.id !== id));
-                Swal.fire('Deleted!', 'The timelog has been deleted.', 'success');
-            }
-        });
-    };
-
     return (
         <div className="timelogs-container">
             <Sidebar />
             <p>Timelogs</p>
+            <div className="filters-container">
+                <div className="filter-item">
+                    <label>User ID</label>
+                    <input
+                        type="text"
+                        name="userId"
+                        value={filters.userId}
+                        onChange={handleFilterChange}
+                    />
+                </div>
+                <div className="filter-item">
+                    <label>Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={filters.name}
+                        onChange={handleFilterChange}
+                    />
+                </div>
+                <div className="filter-item">
+                    <label>Date</label>
+                    <input
+                        type="date"
+                        name="date"
+                        value={filters.date}
+                        onChange={handleFilterChange}
+                    />
+                </div>
+                <div className="filter-item">
+                    <label>Time</label>
+                    <input
+                        type="time"
+                        name="time"
+                        value={filters.time}
+                        onChange={handleFilterChange}
+                    />
+                </div>
+                <div className="filter-item">
+                    <label>Type</label>
+                    <select
+                        name="type"
+                        value={filters.type}
+                        onChange={handleFilterChange}
+                    >
+                        <option value="">All</option>
+                        <option value="LOG IN">LOG IN</option>
+                        <option value="LOG OUT">LOG OUT</option>
+                    </select>
+                </div>
+
+                {/* Reset Button */}
+                <div className="reset-button-container">
+                    <button className="reset-button" onClick={resetFilters}>Reset Filters</button>
+                </div>
+            </div>
             <div className="table-wrapper">
                 <table className="timelogs-table">
                     <thead>
@@ -92,96 +199,26 @@ function Timelogs() {
                             <th>TIME LOGGED</th>
                             <th>DATE LOGGED</th>
                             <th>TYPE</th>
-                            <th>MANAGE</th>
                         </tr>
                     </thead>
                     <tbody>
                         {currentData.map((log) => (
-                            <tr key={log.id}>
-                                <td>{log.id}</td>
-                                <td>{log.task}</td>
-                                <td>{log.employee}</td>
-                                <td>{log.hours}</td>
-                                <td>{log.date}</td>
-                                <td className={log.type === 'Sample' ? 'green' : 'red'}>{log.type}</td>
-                                <td>
-                                    <button className="editbtn" onClick={() => openEditModal(log)}>
-                                        <img src={Edit} alt="Edit" />
-                                    </button>
-                                    <button className="deletebtn" onClick={() => handleDelete(log.id)}>
-                                        <img src={Delete} alt="Delete" />
-                                    </button>
-                                </td>
+                            <tr key={log.timelog_id}>
+                                <td>{log.timelog_id}</td>
+                                <td>{log.user_id}</td>
+                                <td>{log.full_name}</td>
+                                <td>{convertTo12HourFormat(log.time)}</td> {/* Convert time to 12-hour format */}
+                                <td>{new Date(log.date).toLocaleDateString()}</td>
+                                <td className={log.type === 'LOG IN' ? 'green' : 'red'}>{log.type}</td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
 
-            {isModalOpen && (
-    <div className="timelogs-modal-overlay">
-        <div className="timelogs-modal-content">
-            <h2>Edit Timelog</h2>
-            <form onSubmit={handleEditSubmit}>
-                <div className="form-group">
-                    <label htmlFor="employee">USER ID</label> 
-                    <input
-                        type="text"
-                        id="employee"
-                        value={editingTimelog.employee}
-                        onChange={(e) => setEditingTimelog({ ...editingTimelog, employee: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="employeeName">NAME</label> 
-                    <input
-                        type="text"
-                        id="employeeName"
-                        value={editingTimelog.employee}
-                        onChange={(e) => setEditingTimelog({ ...editingTimelog, employee: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="hours">TIME IN</label> 
-                    <input
-                        type="number"
-                        id="hours"
-                        value={editingTimelog.hours}
-                        onChange={(e) => setEditingTimelog({ ...editingTimelog, hours: +e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="date">DATE LOGGED</label> 
-                    <input
-                        type="date"
-                        id="date"
-                        value={editingTimelog.date}
-                        onChange={(e) => setEditingTimelog({ ...editingTimelog, date: e.target.value })}
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="type">TYPE</label> 
-                    <select
-                        id="type"
-                        value={editingTimelog.type}
-                        onChange={(e) => setEditingTimelog({ ...editingTimelog, type: e.target.value })}
-                    >
-                        <option value="Sample">Sample</option>
-                        <option value="Time In/Out">Time In/Out</option>
-                    </select>
-                </div>
-                <div className="timelogs-modal-footer">
-                    <button type="button" onClick={closeModal}>Cancel</button>
-                    <button type="submit">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-)}
-
-<div className="pagination-container">
+            <div className="pagination-container">
                 <div className="pagination-info">
-                    {`Showing ${startIndex + 1}-${Math.min(startIndex + itemsPerPage, timelogsData.length)} of ${timelogsData.length}`}
+                    {`Showing ${startIndex + 1}-${Math.min(startIndex + itemsPerPage, filteredData.length)} of ${filteredData.length}`}
                 </div>
                 <div className="pagination-arrows">
                     <button
@@ -201,7 +238,6 @@ function Timelogs() {
                 </div>
             </div>
         </div>
-   
     );
 }
 
