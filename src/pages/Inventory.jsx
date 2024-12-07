@@ -17,7 +17,7 @@ function Inventory() {
     // Fetch data when the component mounts
     useEffect(() => {
         // Replace the URL with your actual backend URL
-        axios.get('http://54.252.176.21:8000/api/inventory')
+        axios.get('http://54.252.176.21:3030/api/inventory')
             .then((response) => {
                 setInventoryData(response.data); // Set the fetched data to state
             })
@@ -45,7 +45,7 @@ function Inventory() {
         setInventoryData(updatedData);
     
         axios
-            .patch(`http://54.252.176.21:8000/api/inventory/${itemToUpdate.item_no}`, { quantity: newQuantity })
+            .patch(`http://54.252.176.21:3030/api/inventory/${itemToUpdate.item_no}`, { quantity: newQuantity })
             .then((response) => {
                 console.log("Quantity updated successfully:", response.data);
             })

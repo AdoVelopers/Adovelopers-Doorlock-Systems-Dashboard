@@ -40,7 +40,7 @@ function Timelogs() {
     useEffect(() => {
         const fetchTimelogs = async () => {
             try {
-                const response = await axios.get('http://54.252.176.21:8000/api/timelogs');
+                const response = await axios.get('http://54.252.176.21:3030/api/timelogs');
                 setTimelogsData(response.data);  // Assuming response.data contains the timelog data
             } catch (error) {
                 console.error('Error fetching timelogs:', error);

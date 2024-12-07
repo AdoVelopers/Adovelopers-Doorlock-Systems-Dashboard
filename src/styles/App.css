@@ -1,0 +1,106 @@
+/* Global styles for light and dark modes */
+:root {
+  --bg-light: #fff;
+  --bg-dark: #2e2e2e;
+  --text-light: #333;
+  --text-dark: #fff;
+  --header-light: #f0f0f0;
+  --header-dark: #222;
+  --input-bg-light: #f9f9f9;
+  --input-bg-dark: #444;
+  --input-text-light: #333;
+  --input-text-dark: #fff;
+  --table-header-light: #f4f4f4;
+  --table-header-dark: #444;
+  --odd-row-light: #f9f9f9;
+  --even-row-light: #fff;
+  --odd-row-dark: #555;
+  --even-row-dark: #444;
+}
+
+/* Body Styles */
+body {
+  background-color: var(--bg-light);
+  color: var(--text-light);
+  font-family: Arial, sans-serif;
+}
+
+body.dark {
+  background-color: var(--bg-dark);
+  color: var(--text-dark);
+}
+
+/* Header Styles */
+.header {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+body.light .global-header {
+  background-color: var(--header-light);
+  color: var(--text-light);
+}
+
+body.dark .global-header {
+  background-color: var(--header-dark);
+  color: var(--text-dark);
+}
+
+/* Navbar Styling */
+.header nav ul {
+  display: flex;
+  gap: 20px;
+}
+
+.header a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header a:hover {
+  text-decoration: underline;
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  background-color: var(--bg-light);
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+body.dark .dropdown-menu {
+  background-color: var(--bg-dark);
+  border: 1px solid #444;
+}
+
+.dropdown-item {
+  color: inherit;
+  padding: 8px 10px;
+  display: block;
+}
+
+body.dark .dropdown-item {
+  color: var(--text-dark);
+}
+
+.dropdown-item:hover {
+  background-color: #ddd;
+}
+
+body.dark .dropdown-item:hover {
+  background-color: #444;
+}
+
+/* Page Layout Styles */
+.main-content {
+  padding: 20px;
+  background-color: inherit;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}

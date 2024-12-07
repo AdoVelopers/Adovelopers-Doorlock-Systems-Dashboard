@@ -1,6 +1,17 @@
+/* Global Styles for Light and Dark Themes */
+body.light {
+    background-color: #fff;
+    color: #333;
+}
+
+body.dark {
+    background-color: #333;
+    color: #fff;
+}
+
+/* Dashboard Layout */
 .dashboard-container {
     display: flex;
- 
 }
 
 .dashboard-content {
@@ -9,17 +20,28 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    
 }
 
+/* Header Styles */
 .dashboard-header h1 {
     margin: 0;
     font-size: 2rem;
-    color: rgb(0, 0, 0);
     font-weight: 500;
-    
+    color: rgb(0, 0, 0); /* Default color for light theme */
+    transition: color 0.3s ease; /* Smooth color transition */
 }
 
+/* Light Mode Header */
+body.light .dashboard-header h1 {
+    color: #333; /* Dark text in light mode */
+}
+
+/* Dark Mode Header */
+body.dark .dashboard-header h1 {
+    color: #fff; /* Light text in dark mode */
+}
+
+/* Grid Layout */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -29,7 +51,7 @@
 }
 
 .grid-item {
-    background-color: FFFFFF;
+    background-color: #f9f9f9; /* Default background for light theme */
     padding: 0.625rem;
     border-radius: 0.5rem;
     box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
@@ -37,6 +59,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: inherit; /* Inherits the color from the theme */
+}
+
+body.dark .grid-item {
+    background-color: #444;
 }
 
 .grid-item .text-container {
@@ -46,13 +73,13 @@
 .grid-item h1 {
     margin: 0.3125rem 0;
     font-size: 1.75rem;
-    color: black;
+    color: inherit; /* Inherit color from the theme */
 }
 
 .grid-item p {
     margin: 0;
     font-size: 1rem;
-    color: gray;
+    color: inherit; /* Inherit color from the theme */
 }
 
 .grid-image {
@@ -62,7 +89,7 @@
     object-fit: cover;
 }
 
-
+/* Pagination Styles */
 .pagination-container {
     display: flex;
     justify-content: space-between;

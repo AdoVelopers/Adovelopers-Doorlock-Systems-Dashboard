@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import '../styles/Header.css';
 import Image from '../assets/karl-bilog.png';
 import { IoIosArrowDropdown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-
+import { ThemeContext } from "../contexts/ThemeContext"; // Import ThemeContext
 
 function Header() {
     const [showDropdown, setShowDropdown] = useState(false);
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const { theme } = useContext(ThemeContext); // Get the current theme
 
     const toggleDropdown = () => setShowDropdown(prevState => !prevState);
 
@@ -50,7 +51,7 @@ function Header() {
             if (result.isConfirmed) {
                 localStorage.removeItem('loginSuccess');
                 sessionStorage.clear();
-                navigate("/", { state: { message: "You have successfully logged out." } }); // Pass message to login page
+                navigate("/", { state: { message: "You have successfully logged out." } });
             }
         });
     };
@@ -58,7 +59,7 @@ function Header() {
     const closeDropdown = () => setShowDropdown(false);
 
     return (
-        <div className="global-header">
+        <div className={`global-header ${theme}`}> {/* Apply theme class to global-header */}
             <div className="header-content">
                 <div className="header-text"></div>
                 <div className="header-profile">

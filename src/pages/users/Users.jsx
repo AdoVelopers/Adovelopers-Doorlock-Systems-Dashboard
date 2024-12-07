@@ -15,7 +15,7 @@ function Users() {
         // Fetching users for approval from the backend API
         const fetchForApproval = async () => {
             try {
-                const response = await axios.get('http://54.252.176.21:8000/api/users/clients');
+                const response = await axios.get('http://54.252.176.21:3030/api/users/clients');
                 const sortedUsers = response.data.sort((a, b) => {
                     if (a.active === 'Active' && b.active !== 'Active') return -1;
                     if (a.active !== 'Active' && b.active === 'Active') return 1;

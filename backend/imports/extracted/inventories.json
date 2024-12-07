@@ -1,0 +1,227 @@
+[
+  {
+    "_id": "674dd8fccf853e298244f347",
+    "item_no": "FS0001",
+    "item_name": "Fingerprint Scanner",
+    "status": "Available",
+    "quantity": 16,
+    "remarks": "Brand New",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f348",
+    "item_no": "CM0002",
+    "item_name": "Camera",
+    "status": "Low Stock",
+    "quantity": 3,
+    "remarks": "Refurbished",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f349",
+    "item_no": "KB0003",
+    "item_name": "Keyboard",
+    "status": "Available",
+    "quantity": 10,
+    "remarks": "Prototype",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f34a",
+    "item_no": "MN0004",
+    "item_name": "Monitor",
+    "status": "Available",
+    "quantity": 5,
+    "remarks": "Old Version",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f34b",
+    "item_no": "MS0005",
+    "item_name": "Mouse",
+    "status": "Low Stock",
+    "quantity": 3,
+    "remarks": "Best Seller",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f34c",
+    "item_no": "PS0006",
+    "item_name": "Power Supply",
+    "status": "Available",
+    "quantity": 8,
+    "remarks": "New Arrival",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f34d",
+    "item_no": "HD0007",
+    "item_name": "Hard Drive",
+    "status": "Low Stock",
+    "quantity": 4,
+    "remarks": "Damaged Packaging",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f34e",
+    "item_no": "MB0008",
+    "item_name": "Motherboard",
+    "status": "Available",
+    "quantity": 20,
+    "remarks": "Updated Model",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f34f",
+    "item_no": "CP0009",
+    "item_name": "CPU",
+    "status": "Out of Stock",
+    "quantity": 0,
+    "remarks": "Expected Next Week",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f350",
+    "item_no": "RP0010",
+    "item_name": "Router",
+    "status": "Available",
+    "quantity": 12,
+    "remarks": "Refurbished",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f351",
+    "item_no": "AP0011",
+    "item_name": "Access Point",
+    "status": "Low Stock",
+    "quantity": 1,
+    "remarks": "Last Unit",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f352",
+    "item_no": "SW0012",
+    "item_name": "Switch",
+    "status": "Available",
+    "quantity": 30,
+    "remarks": "Bulk Stock",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f353",
+    "item_no": "CB0013",
+    "item_name": "Cables",
+    "status": "Available",
+    "quantity": 50,
+    "remarks": "Generic Brand",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f354",
+    "item_no": "MT0014",
+    "item_name": "Mounts",
+    "status": "Available",
+    "quantity": 10,
+    "remarks": "Versatile Use",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f355",
+    "item_no": "CR0015",
+    "item_name": "Card Reader",
+    "status": "Low Stock",
+    "quantity": 2,
+    "remarks": "Fast Reader",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f356",
+    "item_no": "SP0016",
+    "item_name": "Speakers",
+    "status": "Available",
+    "quantity": 25,
+    "remarks": "Best Audio",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f357",
+    "item_no": "HD0017",
+    "item_name": "Headphones",
+    "status": "Available",
+    "quantity": 18,
+    "remarks": "Noise Cancelling",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f358",
+    "item_no": "PN0018",
+    "item_name": "Pen Drive",
+    "status": "Low Stock",
+    "quantity": 3,
+    "remarks": "32GB Capacity",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f359",
+    "item_no": "PR0019",
+    "item_name": "Printer",
+    "status": "Out of Stock",
+    "quantity": 0,
+    "remarks": "High Demand",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f35a",
+    "item_no": "SC0020",
+    "item_name": "Scanner",
+    "status": "Available",
+    "quantity": 9,
+    "remarks": "Compact Design",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f35b",
+    "item_no": "BK0021",
+    "item_name": "Backup Drive",
+    "status": "Available",
+    "quantity": 13,
+    "remarks": "Reliable Backup",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f35c",
+    "item_no": "DS0022",
+    "item_name": "Desktop",
+    "status": "Available",
+    "quantity": 7,
+    "remarks": "All-in-One",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f35d",
+    "item_no": "LT0023",
+    "item_name": "Laptop",
+    "status": "Low Stock",
+    "quantity": 3,
+    "remarks": "High Performance",
+    "type": "TIME OUT"
+  },
+  {
+    "_id": "674dd8fccf853e298244f35e",
+    "item_no": "WF0024",
+    "item_name": "WiFi Dongle",
+    "status": "Available",
+    "quantity": 15,
+    "remarks": "Portable",
+    "type": "TIME IN"
+  },
+  {
+    "_id": "674dd8fccf853e298244f35f",
+    "item_no": "CH0025",
+    "item_name": "Charger",
+    "status": "Available",
+    "quantity": 20,
+    "remarks": "Universal Compatibility",
+    "type": "TIME IN"
+  }
+]

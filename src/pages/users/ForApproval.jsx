@@ -15,7 +15,7 @@ function Users() {
         // Fetching users for approval from the backend API
         const fetchForApproval = async () => {
             try {
-                const response = await axios.get('http://54.252.176.21:8000/api/users/forApproval');
+                const response = await axios.get('http://54.252.176.21:3030/api/users/forApproval');
                 setUsersData(response.data);
             } catch (error) {
                 console.error('Error fetching users:', error);

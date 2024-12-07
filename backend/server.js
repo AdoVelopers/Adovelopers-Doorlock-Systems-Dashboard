@@ -7,6 +7,7 @@ const dashboardRoutes = require('./routes/dashboardRoutes');
 const inventoryRoutes = require('./routes/inventoryRoute');
 const userRoutes = require('./routes/userRoute');
 const timelogsRoutes = require('./routes/timelogsRoute');
+const settingsRoutes = require('./routes/settingsRoute');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -30,11 +31,13 @@ const app = express();
 app.use(express.json());
 app.use(cors());  // Allows all origins
 
+
+app.use('/dashboard', dashboardRoutes);
 app.use('/api/auth', authRoutes);
-app.use('/admin', dashboardRoutes);
 app.use('/api/inventory', inventoryRoutes);
 app.use('/api/users', userRoutes); 
 app.use('/api/timelogs', timelogsRoutes);
+app.use('/settings', settingsRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

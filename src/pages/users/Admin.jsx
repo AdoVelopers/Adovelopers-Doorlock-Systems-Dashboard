@@ -9,13 +9,13 @@ import axios from 'axios';
 function Users() {
     const [usersData, setUsersData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4;
+    const itemsPerPage = 8;
 
     useEffect(() => {
         // Fetching users for approval from the backend API
         const fetchForApproval = async () => {
             try {
-                const response = await axios.get('http://54.252.176.21:8000/api/users/admins');
+                const response = await axios.get('http://54.252.176.21:3030/api/users/admins');
                 const sortedUsers = response.data.sort((a, b) => {
                     if (a.active === 'Active' && b.active !== 'Active') return -1;
                     if (a.active !== 'Active' && b.active === 'Active') return 1;

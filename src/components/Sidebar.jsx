@@ -9,17 +9,32 @@ import Users from '../assets/users.png';
 import { CiPower } from "react-icons/ci";
 import Dashboard from '../assets/dashboard.png';
 import UserContext from '../protectedRoutes/UserContext';
+import axios from 'axios';
 
 function Sidebar() {
+    const [orgName, setOrgName] = useState('');
     const [isUsersOpen, setIsUsersOpen] = useState(false);
     const location = useLocation();
     const [activeLink, setActiveLink] = useState(location.pathname);
-
     const { user } = useContext(UserContext);
 
     useEffect(() => {
         setActiveLink(location.pathname);
     }, [location]);
+
+    // Fetch organization name from the backend
+    useEffect(() => {
+        const fetchOrgName = async () => {
+            try {
+                const response = await axios.get('http://54.252.176.21:3030/settings'); // Adjust this API endpoint as needed
+                setOrgName(response.data.orgName || 'Ado Velopers'); // Fallback if orgName doesn't exist
+            } catch (error) {
+                console.error('Error fetching organization name:', error);
+            }
+        };
+
+        fetchOrgName();
+    }, []);
 
     const handleUsersClick = () => {
         setIsUsersOpen(!isUsersOpen);
@@ -31,7 +46,8 @@ function Sidebar() {
         <div className="sidebar">
             <div className="sidebar-content">
                 <div className="logo-container">
-                    <div className="blue-text"><h1>Ado</h1></div><div><h1>Velopers</h1></div>
+                    <div className="blue-text"><h1>{orgName ? orgName.split(' ')[0] : 'Ado'}</h1></div>
+                    <div><h1>{orgName ? orgName.split(' ')[1] : 'Velopers'}</h1></div>
                 </div>
 
                 <ul>

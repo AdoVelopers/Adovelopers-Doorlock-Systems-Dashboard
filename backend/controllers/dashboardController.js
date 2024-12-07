@@ -1,22 +1,24 @@
-const User = require('../models/Users'); // Adjust the path as necessary
-const Log = require('../models/Log'); // Adjust the path to your Log model
-const Notification = require('../models/Notification'); // Adjust the path to your Notification model
+const User = require('../models/Users');
+const Inventory = require('../models/Inventory');
 
-// Controller to fetch dashboard data
-exports.getDashboardData = async (req, res) => {
-    console.log("User ID:", req.user._id); // Log the user ID
+// Controller to get dashboard data
+const getDashboardData = async (req, res) => {
     try {
         const totalUsers = await User.countDocuments();
-        const totalLogs = await Log.countDocuments();
-        const totalNotifications = await Notification.countDocuments(); // Uncomment if you want to include this
-
-        res.json({
+        const activeUsers = await User.countDocuments({ active: "Active" });
+        const forApproval = await User.countDocuments({ approved: true });
+        const totalProducts = await Inventory.countDocuments();
+        
+        res.status(200).json({
             totalUsers,
-            totalLogs,
-            totalNotifications, // Uncomment if you want to include this
+            activeUsers,
+            forApproval,
+            totalProducts, 
         });
     } catch (error) {
         console.error('Error fetching dashboard data:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Failed to fetch dashboard data', error: error.message });
     }
 };
+
+module.exports = { getDashboardData };
