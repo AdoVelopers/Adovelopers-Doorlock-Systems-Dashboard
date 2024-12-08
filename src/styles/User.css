@@ -1,3 +1,16 @@
+.approved {
+    color: green; /* Change the text color to red for approved status */
+}
+
+.pending {
+    color: red; 
+     /* Change the text color to green for pending status */
+}
+
+.status-text {
+    margin-left: 40px; /* Adjust this value to move the text more to the right */
+}
+
 .users-container {
     display: flex;
 }

@@ -1,12 +1,10 @@
 const express = require('express');
-const { login, logout } = require('../controllers/authController');
+const { login, logout } = require('../controllers/authController'); // Import functions
+
 const router = express.Router();
-const protect = require('../middlewares/auth');
 
-// Admin login route
+// Define routes
 router.post('/login', login);
-
-// Admin logout route
-router.post('/logout', protect, logout);
+router.post('/logout', logout);
 
 module.exports = router;

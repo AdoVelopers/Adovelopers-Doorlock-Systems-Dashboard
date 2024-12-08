@@ -28,12 +28,6 @@ function Dashboard() {
             });
         }
 
-        // Check if user role is admin or user, then refresh after login
-        const user = JSON.parse(localStorage.getItem('user')); // Assuming the user is stored in localStorage
-        if (user && (user.role === 'admin' || user.role === 'user')) {
-            window.location.reload(); // Refresh the page for admin or user role
-        }
-
         const fetchDashboardData = async () => {
             try {
                 const response = await axios.get('http://54.252.176.21:3030/dashboard');

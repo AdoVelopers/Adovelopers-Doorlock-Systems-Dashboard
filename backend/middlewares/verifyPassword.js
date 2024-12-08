@@ -1,36 +1,29 @@
 const crypto = require('crypto');
 
-function verifyPassword(pwhash, password) {
-    // Check if the hash contains at least two "$" symbols
+function _hash_internal(method, salt, password) {
+    const methodParts = method.split(':');
+    const hashingMethod = methodParts[1]; // 'sha256' or other hash method
+    const iterations = parseInt(methodParts[2], 10) || 260000; // Default to 260000 iterations if not specified
+
+    // Use PBKDF2 hashing
+    const hashBuffer = crypto.pbkdf2Sync(password, salt, iterations, 32, hashingMethod);
+    return [hashBuffer.toString('hex')]; // Return the hashed password in hex format
+}
+
+function check_password_hash(pwhash, password) {
+    // Ensure the hash is correctly formatted with method, salt, and hash value
     if ((pwhash.match(/\$/g) || []).length < 2) {
-        return false;
+        return false; // Invalid hash format
     }
 
     // Split the hash into method, salt, and hashed value
     const [method, salt, hashval] = pwhash.split('$', 3);
 
-    // Extract the hashing algorithm and iterations from the method
-    const methodParts = method.split(':');
-    if (methodParts[0] !== 'pbkdf2' || methodParts.length < 2) {
-        throw new Error(`Invalid hashing method: ${method}`);
-    }
+    // Generate the hash from the password and salt using the specified method
+    const [generatedHash] = _hash_internal(method, salt, password);
 
-    const hashingMethod = methodParts[1]; // sha256
-    const iterations = parseInt(methodParts[2]) || 260000; // Get iterations, default to 260000 if not specified
-
-    // Hash the provided password using the method and salt
-    const hashBuffer = crypto.pbkdf2Sync(password, salt, iterations, 32, hashingMethod);
-
-    // Convert the stored hash value from Base64 to Buffer
-    const storedHashBuffer = Buffer.from(hashval, 'hex'); // Assuming the stored hash is in hex format
-
-    // Check if both buffers are of the same length
-    if (hashBuffer.length !== storedHashBuffer.length) {
-        throw new RangeError('Input buffers must have the same byte length');
-    }
-
-    // Use timingSafeEqual to compare
-    return crypto.timingSafeEqual(hashBuffer, storedHashBuffer);
+    // Use timingSafeEqual to securely compare the generated hash with the stored hash
+    return crypto.timingSafeEqual(Buffer.from(generatedHash, 'hex'), Buffer.from(hashval, 'hex'));
 }
 
-module.exports = verifyPassword;
+module.exports = check_password_hash;

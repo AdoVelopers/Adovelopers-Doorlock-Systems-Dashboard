@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
     approved: { type: Boolean, default: false },
     role: { type: String, enum: ['CLIENT', 'ADMIN', 'SUPERADMIN'], default: 'CLIENT' },
     token: { type: String },
-    last_login: { type: Date }
+    last_login: { type: Date },
+    profileImagePath: { type: String } // Changed to profileImagePath for consistency
 });
 
 const Userdata = mongoose.model('userData', userSchema);

@@ -9,14 +9,18 @@ import axios from 'axios';
 function Users() {
     const [usersData, setUsersData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4;
+    const itemsPerPage = 8;
 
     useEffect(() => {
         // Fetching users for approval from the backend API
         const fetchForApproval = async () => {
             try {
                 const response = await axios.get('http://54.252.176.21:3030/api/users/forApproval');
-                setUsersData(response.data);
+
+                // Sort users by date in descending order (latest date first)
+                const sortedUsers = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                setUsersData(sortedUsers);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -50,7 +54,7 @@ function Users() {
                                 <th>NAME</th>
                                 <th>DATE REGISTERED</th>
                                 <th>ROLE</th>
-                                <th>STATUS</th>
+                                <th>APPROVAL STATUS</th>
                                 <th>MANAGE</th>
                             </tr>
                         </thead>
@@ -61,7 +65,11 @@ function Users() {
                                     <td>{user.full_name}</td>
                                     <td>{new Date(user.date).toLocaleDateString()}</td>
                                     <td>{user.role}</td>
-                                    <td>{user.approved ? 'Approved' : 'Pending'}</td>
+                                    <td className={user.approved ? 'approved' : 'pending'}>
+                                        <span className="status-text">
+                                            {user.approved ? 'Approved' : 'Pending'}
+                                        </span>
+                                    </td>
                                     <td>
                                         <button className="editbtn">
                                             <img src={Edit} alt="Edit" />

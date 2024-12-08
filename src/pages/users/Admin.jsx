@@ -17,15 +17,24 @@ function Users() {
             try {
                 const response = await axios.get('http://54.252.176.21:3030/api/users/admins');
                 const sortedUsers = response.data.sort((a, b) => {
+                    // Sort by registration date (newest to oldest)
+                    const dateComparison = new Date(b.date) - new Date(a.date);
+                    if (dateComparison !== 0) {
+                        return dateComparison; // If dates are not equal, sort by date
+                    }
+
+                    // If dates are equal, sort by active status
                     if (a.active === 'Active' && b.active !== 'Active') return -1;
                     if (a.active !== 'Active' && b.active === 'Active') return 1;
-                    return 0;
+
+                    return 0; // If both criteria are equal, keep order as is
                 });
                 setUsersData(sortedUsers);
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
         };
+
 
         fetchForApproval();
     }, []);

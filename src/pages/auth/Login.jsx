@@ -10,7 +10,7 @@ import { useUser } from '../../protectedRoutes/UserContext';
 import LoginLoading from './LoginLoading';
 
 function Login() {
-    const [email, setEmail] = useState('');
+    const [user_id, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [eyeClass, setEyeClass] = useState('');
@@ -19,6 +19,7 @@ function Login() {
     const location = useLocation();
     const { loginUser } = useUser();
 
+    // Handle success or error messages on component mount
     useEffect(() => {
         if (location.state?.message) {
             Swal.fire({
@@ -30,59 +31,61 @@ function Login() {
         }
     }, [location.state]);
 
-    const defaultUser = {
-        email: 'superadmin@gmail.com',
-        password: 'pass123',
-        role: 'superadmin',
-    };
+    // Handle login form submission
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
 
-    const defaultAdmin = {
-        email: 'admin@gmail.com',
-        password: 'adminpass',
-        role: 'admin',
-    };
+        // Check if the fields are empty
+        if (!user_id || !password) {
+            Swal.fire('Error', 'Please fill in both fields.', 'error');
+            setLoading(false);
+            return;
+        }
 
-    const defaultUserLogin = {
-        email: 'user@gmail.com',
-        password: 'userpass',
-        role: 'user',
-    };
+        const loginData = {
+            user_id: user_id,
+            password: password,
+        };
 
-const handleLogin = (e) => {
-    e.preventDefault();
-    setLoading(true);
+        try {
+            const response = await fetch(`http://54.252.176.21:3030/api/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(loginData),
+                credentials: 'include', // Ensures cookies are sent and received
+            });
 
-    setTimeout(() => {
-        const users = [
-            { email: 'superadmin@gmail.com', password: 'pass123', role: 'superadmin' },
-            { email: 'admin@gmail.com', password: 'adminpass', role: 'admin' },
-            { email: 'user@gmail.com', password: 'userpass', role: 'user' }
-        ];
+            const data = await response.json();
+            console.log('Response Data:', data);
 
-        const matchedUser = users.find(user => user.email === email && user.password === password);
+            if (response.ok && data.message === 'Logged in successfully') {
+                // Store the full user object in localStorage
+                localStorage.setItem('user', JSON.stringify(data));
+                localStorage.setItem('user_id', data.user_id);
+                localStorage.setItem('role', data.role);
 
-        if (matchedUser) {
-            const existingUsers = JSON.parse(localStorage.getItem('users')) || [];
+                loginUser(data);
 
-            const userExists = existingUsers.some(user => user.email === matchedUser.email);
-
-            if (!userExists) {
-                existingUsers.push(matchedUser);
-
-                localStorage.setItem('users', JSON.stringify(existingUsers));
+                // Redirect to the dashboard
+                navigate('/dashboard', { state: { success: true } });
+            }else if(data.statusCode === 'Pending'){
+                Swal.fire('Login failed', 'Your account is pending approval. Please contact the administrator.', 'error');
+            } else {
+                Swal.fire('Login failed', 'Please check your credentials and try again.', 'error');
             }
-
-            localStorage.setItem('user', JSON.stringify(matchedUser));
-            loginUser(matchedUser); 
-            navigate('/dashboard', { state: { success: true } });
-        } else {
-            Swal.fire('Invalid credentials, please try again.');
+        } catch (error) {
+            console.error('Error during login:', error);
+            Swal.fire('Error during login', error.message, 'error');
+        } finally {
             setLoading(false);
         }
-    }, 2000);
-};
+    };
 
 
+    // Toggle password visibility
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
         setEyeClass('bounce');
@@ -112,16 +115,16 @@ const handleLogin = (e) => {
                         <p className="login-subtitle">Enter your admin credentials to proceed.</p>
                         <form onSubmit={handleLogin}>
                             <div className="form-group">
-                                <label htmlFor="email" className="form-label">Email Address</label>
+                                <label htmlFor="user_id" className="form-label">User ID</label>
                                 <div className="input-container">
                                     <IoPersonOutline className="input-icon" />
                                     <input
-                                        id="email"
-                                        type="email"
+                                        id="user_id"
+                                        type="text"
                                         className="form-input with-icon"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Enter your email"
+                                        value={user_id}
+                                        onChange={(e) => setUserId(e.target.value)}
+                                        placeholder="Enter your user ID"
                                     />
                                 </div>
                             </div>

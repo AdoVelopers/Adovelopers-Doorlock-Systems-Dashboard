@@ -41,7 +41,11 @@ function Timelogs() {
         const fetchTimelogs = async () => {
             try {
                 const response = await axios.get('http://54.252.176.21:3030/api/timelogs');
-                setTimelogsData(response.data);  // Assuming response.data contains the timelog data
+
+                // Sort the timelogs data by date in descending order
+                const sortedData = response.data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                setTimelogsData(sortedData);
             } catch (error) {
                 console.error('Error fetching timelogs:', error);
             }
@@ -102,7 +106,19 @@ function Timelogs() {
     };
 
     const convertTo12HourFormat = (time24hr) => {
+        if (!time24hr) {
+            // Return a default value or empty string if the time is missing
+            console.error("Invalid time value:", time24hr);
+            return "Invalid time";
+        }
+
         let [hours, minutes] = time24hr.split(':');
+        if (!hours || !minutes) {
+            // If the split operation fails, return a default value
+            console.error("Invalid time format:", time24hr);
+            return "Invalid time format";
+        }
+
         let period = "AM";
 
         if (parseInt(hours) >= 12) {
@@ -114,7 +130,8 @@ function Timelogs() {
         if (parseInt(hours) === 0) {
             hours = 12;
         }
-        return `${hours}:${minutes} ${period}`;
+
+        return `${hours}:${minutes}`;
     };
 
     const filteredData = filterTimelogs();
@@ -207,7 +224,12 @@ function Timelogs() {
                                 <td>{log.timelog_id}</td>
                                 <td>{log.user_id}</td>
                                 <td>{log.full_name}</td>
-                                <td>{convertTo12HourFormat(log.time)}</td> {/* Convert time to 12-hour format */}
+                                <td>
+                                    {
+                                        // Check if log.time exists. If not, use log.date to extract the time.
+                                        convertTo12HourFormat(log.time || new Date(log.date).toISOString().substring(11, 16))
+                                    }
+                                </td> {/* Convert time to 12-hour format */}
                                 <td>{new Date(log.date).toLocaleDateString()}</td>
                                 <td className={log.type === 'LOG IN' ? 'green' : 'red'}>{log.type}</td>
                             </tr>

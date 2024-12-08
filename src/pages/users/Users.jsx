@@ -9,19 +9,20 @@ import axios from 'axios';
 function Users() {
     const [usersData, setUsersData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 4;
+    const itemsPerPage = 8;
 
     useEffect(() => {
         // Fetching users for approval from the backend API
         const fetchForApproval = async () => {
             try {
                 const response = await axios.get('http://54.252.176.21:3030/api/users/clients');
-                const sortedUsers = response.data.sort((a, b) => {
-                    if (a.active === 'Active' && b.active !== 'Active') return -1;
-                    if (a.active !== 'Active' && b.active === 'Active') return 1;
-                    return 0;
-                });
-                setUsersData(sortedUsers);
+
+                // Filter out users where 'approved' is false and sort by 'date'
+                const filteredAndSortedUsers = response.data
+                    .filter(user => user.approved === true)  // Filter users with 'approved' = true
+                    .sort((a, b) => new Date(b.date) - new Date(a.date));  // Sort by 'date' in descending order
+
+                setUsersData(filteredAndSortedUsers);  // Set the filtered and sorted users data
             } catch (error) {
                 console.error('Error fetching users:', error);
             }
@@ -46,7 +47,7 @@ function Users() {
         <div className="users-container">
             <Sidebar />
             <div className="users-content">
-                <h1>User List</h1>
+                <h1>Client List</h1>
                 <div className="table-wrapper">
                     <table className="users-table">
                         <thead>

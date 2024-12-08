@@ -1,107 +1,134 @@
-const crypto = require('crypto');
 const User = require('../models/Users');
 const Blacklist = require('../models/Blacklist');
-const Log = require('../models/Log');
+const Timelog = require('../models/Timelogs');
 const jwt = require('jsonwebtoken');
 const verifyPassword = require('../middlewares/verifyPassword');
 const generateToken = require('../utils/generateToken');
+const moment = require('moment-timezone');
 
-// Admin login function
-exports.login = async (req, res) => {
-    const { email, password } = req.body;
+// Function to generate a 6-character timelog_id with 'TL' and 8 random digits
+const generateTimelogId = () => {
+    const randomDigits = Math.floor(10000000 + Math.random() * 90000000); // 8 random digits
+    return `TL${randomDigits}`;
+};
+
+// Admin login using user_id
+const login = async (req, res) => {
+    const { user_id, password } = req.body;
 
     try {
-        console.log(`Login attempt for email: ${email}`);
-
-        // Find the admin user by email and role
-        const user = await User.findOne({ email, role: 'ADMIN' });
+        // Fetch the user by user_id
+        const user = await User.findOne({ user_id });
 
         if (!user) {
-            console.error('Admin not found');
-            return res.status(401).json({ message: 'No User found with this Email' });
+            return res.status(401).json({ message: 'User not found' });
         }
 
-        // Check if the user is already logged in
-        if (user.token) {
-            console.warn('User is already logged in');
-            return res.redirect('/admin/dashboard');
+        if (!user.approved) {
+            return res.status(403).json({statusCode: "Pending",  message: 'Your account is pending approval. Please contact the administrator.' });
         }
 
-        // Verify the password using the middleware
+        // Check if the password matches
         const isPasswordMatch = verifyPassword(user.password, password);
 
         if (!isPasswordMatch) {
-            console.error('Password mismatch');
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(401).json({ message: 'Invalid Password' });
         }
 
-        // If the password matches, generate a token and respond with user data
-        const token = generateToken(user._id); // Generate a JWT token
+        // Generate a token for the session
+        const token = generateToken(user._id);
 
-        // Update the user document with the new token
-        user.token = token;
-        user.active = true;
-        await user.save(); 
-
-        // Create a log record for the login
-        await Log.create({
-            user: user._id,
-            user_id: user._id.toString(),
-            full_name: user.full_name, // Ensure this field exists in your User model
-            login_method: 'ADMINPAGE',
-            session_id: token, // You might want to store the token or session ID
+        // Set the token as a cookie (with security options)
+        res.cookie('token', token, {
+            httpOnly: true,  // The cookie is only accessible by the server
+            secure: process.env.NODE_ENV === 'production',  // Use HTTPS in production
+            sameSite: 'None',  // Required for cross-origin requests
+            maxAge: 60 * 60 * 1000,  // Set the expiry time of the cookie (1 hour)
         });
 
-        res.json({
+        // Mark the user as active
+        user.active = Active;
+        await user.save();
+
+        // Generate a timelog ID
+        const timelog_id = generateTimelogId();
+
+        // Get the current time in Manila (Asia/Manila timezone)
+        const localDate = moment().tz('Asia/Manila').toDate();  // Fixed timezone to Asia/Manila
+
+        // Create a new timelog entry
+        await Timelog.create({
+            timelog_id: timelog_id,
+            user_id: user.user_id,
+            full_name: user.full_name,
+            login_method: 'ADMINPAGE',  // The method of login
+            session_id: token,  // Session ID (JWT token)
+            type: 'LOG IN',  // Type of log (LOG IN)
+            date: localDate,  // Save the Manila time (corrected)
+        });
+
+        // Respond with the user data and success message
+        res.status(200).json({
             _id: user._id,
-            email: user.email,
+            user_id: user.user_id,
             role: user.role,
-            token: token, // Include the generated token
+            message: 'Logged in successfully',
         });
-    } catch (error) {
-        console.error('Error during login:', error);
-        res.status(500).json({ message: 'Server error' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: err.message });  // Handle server errors
     }
 };
 
-// Admin logout function (handled on the frontend by clearing the token)
-exports.logout = async (req, res) => {
+
+// Admin logout using token
+const logout = async (req, res) => {
+    const token = req.headers['authorization']?.split(' ')[1];
+
+    if (!token) {
+        return res.status(400).json({ message: 'No token provided' });
+    }
+
     try {
-        const token = req.headers['authorization']?.split(' ')[1]; // Extract token from Bearer
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        if (token) {
-            // Verify the token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-            
-            // Find the log record for the current session and update it
-            await Log.updateOne(
-                { session_id: token }, // Match the session ID
-                { logout_time: new Date() } // Set the logout time to now
-            );
+        await Log.updateOne(
+            { session_id: token },
+            { logout_time: new Date() }
+        );
 
-            // Create an expiration date for the token
-            const expiresAt = new Date(decoded.exp * 1000); // Convert to Date
+        const expiresAt = new Date(decoded.exp * 1000);
 
-            // Add the token to the blacklist
-            await Blacklist.create({ token, expiresAt });
+        await Blacklist.create({ token, expiresAt });
 
-            // Remove the token from the user's record and set active to false
-            await User.updateOne(
-                { _id: decoded.id }, // Match the user by ID
-                { 
-                    $unset: { token: "" }, // Remove the token field
-                    $set: { active: false }  // Set active to false
-                } 
-            );
+        await User.updateOne(
+            { _id: decoded.id },
+            {
+                $unset: { token: "" },
+                $set: { active: false },
+            }
+        );
 
-            res.json({ message: 'Logged out successfully' });
-        } else {
-            return res.status(400).json({ message: 'No token provided' });
-        }
-    } catch (error) {
-        console.error('Error during logout:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        // Create a unique timelog_id for logout (TL + 8 random digits)
+        const timelog_id = generateTimelogId();
+
+        // Create the timelog entry with 'LOG OUT' type
+        await Timelog.create({
+            timelog_id: timelog_id,
+            user_id: decoded.id,
+            full_name: decoded.full_name,
+            session_id: token,
+            type: 'LOG OUT',  // Ensure 'type' is provided
+        });
+
+        res.status(200).json({ message: 'Logged out successfully' });
+    } catch (err) {
+        res.status(401).json({ message: 'Invalid or expired token' });
     }
 };
 
-
+// Exporting functions to be used in routes
+module.exports = {
+    login,
+    logout,
+};

@@ -61,21 +61,22 @@ function Sidebar() {
                             <img src={Inventory} alt="" /> Inventory
                         </Link>
                     </li>
-                    {user && user.role === 'superadmin' && (
+                    {(user && (user.role === 'SUPERADMIN' || user.role === 'ADMIN')) && (
                         <li className={isActive('/timelogs') ? 'active' : ''}>
                             <Link to="/timelogs">
                                 <img src={Timelogs} alt="" /> Timelogs
                             </Link>
                         </li>
                     )}
-                    {user && user.role === 'superadmin' && (
+                    {(user && (user.role === 'SUPERADMIN' || user.role === 'ADMIN')) && (
                         <li className={isActive('/notifications') ? 'active' : ''}>
                             <Link to="/notifications">
                                 <img src={NotificationsIcon} alt="" /> Notifications
                             </Link>
                         </li>
                     )}
-                    {user && user.role === 'superadmin' && (
+
+                    {(user && (user.role === 'SUPERADMIN' || user.role === 'ADMIN')) && (
                         <li
                             className={`${(isActive('/users') || isActive('/admin') || isActive('/regular-users') || isActive('/for-approval')) ? 'active' : ''}`}
                         >
@@ -93,7 +94,7 @@ function Sidebar() {
                                     <Link to="/admin" onClick={() => setActiveLink('/admin')}>Admin</Link>
                                 </li>
                                 <li className={isActive('/regular-users') ? 'active' : ''}>
-                                    <Link to="/regular-users" onClick={() => setActiveLink('/regular-users')}>Users</Link>
+                                    <Link to="/regular-users" onClick={() => setActiveLink('/regular-users')}>Clients</Link>
                                 </li>
                                 <li className={isActive('/for-approval') ? 'active' : ''}>
                                     <Link to="/for-approval" onClick={() => setActiveLink('/for-approval')}>Pending</Link>

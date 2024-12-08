@@ -1,10 +1,23 @@
+.profile-image-preview {
+  margin-top: 10px;
+}
+
+.profile-image-preview img {
+  max-width: 150px;
+  max-height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+/* Edit Profile Form Layout */
 .edit-profile-form {
   padding: 1.25rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: center;
+  align-items: center; /* Center the form contents */
   height: 100vh;
   background-color: #F5F6FA;
 }
@@ -109,6 +122,38 @@
   color: black;
 }
 
+/* New styles for the profile image section */
+.edit-profile-input-image {
+  display: block; /* Prevent flex centering from affecting it */
+  margin-left: -315px;
+}
+
+.edit-profile-input-image input[type="file"] {
+  display: block;
+  width: auto;
+  margin-bottom: 10px;
+}
+
+.profile-image-preview {
+  margin-top: 10px;
+  width: 150px; /* Set a fixed width */
+  height: 150px; /* Set a fixed height to maintain the circle shape */
+  overflow: hidden; /* Hide the part of the image that exceeds the circle */
+  border-radius: 50%; /* Make the container a circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-image-preview img {
+  width: 100%; /* Ensure the image fills the container */
+  height: 100%; /* Ensure the image fills the container */
+  object-fit: cover; /* Cover the area without distorting the aspect ratio */
+  border-radius: 50%; /* Make the image itself a circle */
+  border: 2px solid #ddd; /* Optional: Add a border around the circle */
+}
+
+/* Adjust layout for mobile screens */
 @media (max-width: 768px) {
   .edit-profile-form-container {
     flex-direction: column;
